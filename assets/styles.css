@@ -802,7 +802,7 @@ blockquote {
   --button-shadow-hover: 0 2px 4px rgba(25, 23, 22, 0.16), 0 8px 16px rgba(25, 23, 22, 0.18), 0 13px 28px rgba(25, 23, 22, 0.12);
   position: fixed;
   right: 1rem;
-  bottom: 1rem;
+  bottom: var(--floating-donate-bottom, 1rem);
   z-index: 20;
   display: inline-flex;
   align-items: center;

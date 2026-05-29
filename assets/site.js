@@ -250,6 +250,8 @@
   }
 
   if (floatingDonate) {
+    var footer = document.querySelector(".site-footer");
+    var floatingDonateGap = 16;
     var donateTargets = [];
     var buttons = document.querySelectorAll("a.button");
     for (var j = 0; j < buttons.length; j += 1) {
@@ -265,6 +267,12 @@
     var ticking = false;
     var updateDonateHandoff = function () {
       ticking = false;
+      if (footer) {
+        var footerRect = footer.getBoundingClientRect();
+        var footerOffset = Math.max(floatingDonateGap, window.innerHeight - footerRect.top + floatingDonateGap);
+        floatingDonate.style.setProperty("--floating-donate-bottom", footerOffset + "px");
+      }
+
       var activeTarget = null;
       for (var k = 0; k < donateTargets.length; k += 1) {
         var target = donateTargets[k];
