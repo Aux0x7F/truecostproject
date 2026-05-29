@@ -207,6 +207,8 @@ The information contained in this site and related pages is provided for informa
 - Do not create separate banner boxes just to hold placeholder imagery.
 - Hero and banner sections should not contain live text. Final text inside banner art belongs in the baked asset and its alt description.
 - Only the homepage hero gets an embedded bottom-center Donate button.
+- The homepage hero is a fixed-aspect image slot: mobile uses a 4:5 placeholder ratio and desktop uses 16:9 until final asset dimensions arrive.
+- On desktop, the header Donate button stays plain white while the homepage hero Donate button has not yet scrolled past the sticky header. After that point it turns gold.
 - Do not add a separate visible homepage intro section for the hero headline or pitch unless the client asks for it.
 - Do not let placeholder art dominate the page.
 - Avoid broken-looking empty space.
