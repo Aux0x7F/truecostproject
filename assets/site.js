@@ -127,6 +127,19 @@
           }
           return false;
         };
+        var cancelElementEdit = function (element) {
+          if (!element || !element._copyField) {
+            return;
+          }
+          element._copyField.value = element.getAttribute("data-copy-original") || "";
+          sizeField(element._copyField);
+          element.removeAttribute("data-copy-dirty");
+          element.removeAttribute("data-copy-syncing");
+          setDirty(hasDirtyElements());
+          if (statusText) {
+            statusText.textContent = "Change canceled";
+          }
+        };
         var syncElement = function (element) {
           if (!element || !element.hasAttribute("data-copy-dirty")) {
             return Promise.resolve({ skipped: true });
@@ -211,6 +224,17 @@
               host.setAttribute("data-copy-dirty", "true");
             }
             setDirty(true);
+          });
+          field.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" || event.key === "Esc") {
+              event.preventDefault();
+              event.stopPropagation();
+              var host = this.closest("[data-copy-editable]");
+              if (host) {
+                cancelElementEdit(host);
+              }
+              this.blur();
+            }
           });
           field.addEventListener("blur", function () {
             var host = this.closest("[data-copy-editable]");

@@ -75,6 +75,7 @@ Never trade a working static launch for a clever interaction.
 - The local copy editor should edit body copy in place, not button or navigation labels.
 - In editor mode, same-site links and buttons should remain followable and should preserve `?dev=1` when moving between pages.
 - Editor focus loss should sync changed copy into `copy/` and regenerated HTML; the Save action should commit and push already-synced files after acceptance checks pass.
+- In editor mode, pressing Escape in an active field should cancel that field's unsynced changes and restore its last synced value.
 
 ## Required Workspace Skill
 
