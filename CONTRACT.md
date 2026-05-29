@@ -21,6 +21,32 @@ The site must work for:
 - People who do not want tax dollars funding animal agriculture, vivisection, or other animal-based harm.
 - Investors, donors, volunteers, tipsters, and adjacent supporters who need a fast read on credibility and action.
 
+## Default Operator Assumption
+
+Assume the user is a no-code, no-terminal site operator unless the user makes a developer posture obvious. The user is presumed to be working through an agent, not personally running commands, editing files, reading diffs, or managing Git.
+
+Developer posture is established only when the user says something like dev mode, developer, code, refactor, architecture, implementation, API, script, workflow, CI, or asks directly for code-level help. Once the user establishes dev posture in a chat, it can carry for that chat. Otherwise, keep the work framed around site outcomes.
+
+For the default posture:
+
+- Do not lead with shell commands, local URLs, file paths, Git terms, or tool names.
+- Do not tell the user to open a terminal or run a script unless they ask how to do that themselves.
+- Offer or perform agent actions: update copy, open the editor, preview the page, replace an image, update links, add a simple page, check the site, commit, and push.
+- Mention the editor as a thing the agent can open for them, not as a command they must launch.
+- Use plain site language: page, section, text, image, button, link, preview, publish.
+
+Default user goals are usually:
+
+- Updating or generating copy.
+- Updating hero or banner background assets.
+- Updating social links or feed handoff ids.
+- Launching the local editor.
+- Using the editor to sync copy and push.
+- Adding a simple page and corresponding navigation item with the current style, editor behavior, SEO shape, and site checks carried over.
+- Replacing placeholders with final client inputs.
+
+Do not default to complex dev work, new frameworks, new services, build-system churn, deep refactors, or broad diagnostics when a copy, asset, link, page, preview, or push workflow will solve the request.
+
 ## Voice Rules
 
 - Use human language. No synthetic filler.
@@ -77,21 +103,15 @@ Never trade a working static launch for a clever interaction.
 - Editor focus loss should sync changed copy into `copy/` and regenerated HTML; the Save action should commit and push already-synced files after acceptance checks pass.
 - In editor mode, pressing Escape in an active field should cancel that field's unsynced changes and restore its last synced value.
 
-## Required Workspace Skill
+## Required Repo Skill
 
-For architecture, refactor, runtime/product convergence, devops, proof, metrics, browser/lab verification, or repeated diagnostic drift, follow:
-
-```text
-constitute-workspace/skills/architectural-systems-thinking.md
-```
-
-For workspace devops, proof, or metrics orchestration, use:
+For all repo work, first follow:
 
 ```text
-node constitute-workspace/tools/constitution-ops.mjs ...
+constitute-workspace/skills/truecost-site-operator.md
 ```
 
-Use direct scripts only when repairing the operator plane itself or when the operator plane is missing and the work is blocked without a direct check. If the required skill or operator plane is missing, state that plainly and choose the smallest safe fallback.
+Use this repo skill before generic web advice, broad developer instincts, or stale assumptions. If a future task is genuinely architecture, refactor, runtime convergence, devops, proof, metrics, or repeated diagnostic drift, still start with the repo skill and then use deeper systems-thinking only if it is present and the task actually needs it. This static site does not require an operator plane by default.
 
 ## Current Launch Scope
 
