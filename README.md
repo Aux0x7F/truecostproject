@@ -2,54 +2,45 @@
 
 Small static launch site for True Cost Project.
 
-## Site Structure
+This repo is agent-enabled, complete with an agent contract and site-specific skills. Ask your preferred agent the following:
 
-- `index.html` is the homepage.
-- `about.html` and `act.html` are the main interior pages.
-- `privacy.html` and `terms.html` are placeholder legal pages.
-- `copy/` holds editable page text.
-- `assets/` holds shared styles, scripts, icons, fonts, and images.
+``` agent
+Please acquire https://github.com/aux0x7F/truecostproject, acquaint yourself with the contract and skills, follow the checks ensuring we're ready to rock, and then tell me how we can work on the site. Thank you!
+```
+**Your GitHub account will need to have permission to `push` to repository. The agent may walk you through any required steps.**
 
-## Preview
+Alternatively, if you feel comfortable in terminal, feel free to follow the steps below.
 
+
+
+## Administering the site
+
+
+### Windows
+
+Acquire:
 ```powershell
-python -m http.server 8000
+git clone https://github.com/aux0x7F/truecostproject; cd truecostproject
 ```
 
-Open `http://127.0.0.1:8000/`.
-
-## Edit Copy
-
-PowerShell:
-
+Edit:
 ```powershell
 .\edit.ps1
 ```
 
-Bash:
+Direct your preferred browser to `http://127.0.0.1:8787/index.html?dev=1`
 
+
+## Linux/MacOS
+
+Acquire:
+```sh
+git clone https://github.com/aux0x7F/truecostproject && cd truecostproject
+```
+
+Edit:
 ```sh
 ./edit.sh
 ```
 
-Open `http://127.0.0.1:8787/index.html?dev=1`.
-
-## Fresh Clone And Edit
-
-PowerShell:
-
-```powershell
-git clone <repo-url> truecostproject; cd truecostproject; .\edit.ps1
-```
-
-Bash:
-
-```sh
-git clone <repo-url> truecostproject && cd truecostproject && ./edit.sh
-```
-
-## Quick Check
-
-```sh
-node tools/check-site.mjs
-```
+Direct your preferred browser to `http://127.0.0.1:8787/index.html?dev=1`

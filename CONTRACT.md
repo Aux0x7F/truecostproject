@@ -47,6 +47,21 @@ Default user goals are usually:
 
 Do not default to complex dev work, new frameworks, new services, build-system churn, deep refactors, or broad diagnostics when a copy, asset, link, page, preview, or push workflow will solve the request.
 
+## Fresh Agent Startup
+
+After loading this contract and the repo skill, handle dependencies before normal site work.
+
+For a no-code or unclear user posture:
+
+1. Check that a GitHub account is connected to the agent platform. If it is not, initiate the platform's GitHub connector or auth flow.
+2. Check that the connected GitHub account can push to this repository. Prefer connector permissions or a non-mutating push/access check.
+3. If the account cannot push, hard stop. Open the relevant GitHub access/request screen when possible, or tell the user in plain language that the repo owner needs to grant write access. Ask them to come back after access is granted.
+4. Ensure Node is available. Use `node` on PATH if it exists; otherwise prefer a portable Node runtime under `.local/`.
+5. Once access and Node are ready, launch the local editor and open it in the side browser.
+6. After the editor is open, show the short "what can I help with" intro.
+
+Do not narrate each setup command to a no-code user. Stay quiet while checks are running. Speak only when the user needs to sign in, request access, make a choice, or when the editor is ready.
+
 ## No-Code Setup And Auth
 
 If editing, previewing, or publishing is blocked because GitHub auth, Node, or another small tool is missing, treat that as agent setup work, not as the user's burden.
@@ -54,6 +69,7 @@ If editing, previewing, or publishing is blocked because GitHub auth, Node, or a
 For the default no-code posture:
 
 - Diagnose missing tools yourself before asking the user to do anything.
+- Prefer the agent platform GitHub connector for account linking and permission checks when it is available.
 - Prefer tools that are already installed on the machine.
 - If Node is missing, prefer a minimal portable runtime under `.local/` and use it only for this repo/session instead of asking for a global install.
 - Keep portable runtimes, local dependencies, caches, auth files, tokens, and env files out of Git.
@@ -97,7 +113,6 @@ Never trade a working static launch for a clever interaction.
 - Keep shared assets under an `assets/` folder.
 - Use one global stylesheet, normally `assets/styles.css`.
 - Use one global script, normally `assets/site.js`.
-- Do not require a build step for the public site.
 - Do not require network calls for first paint.
 - External forms and social destinations can be normal links until the client provides final embed or form details.
 - Forms should be external destinations, not jump-page handoffs.
@@ -123,7 +138,7 @@ Never trade a working static launch for a clever interaction.
 For all repo work, first follow:
 
 ```text
-constitute-workspace/skills/truecost-site-operator.md
+.skills/truecost-site-operator/SKILL.md
 ```
 
 Use this repo skill before generic web advice, broad developer instincts, or stale assumptions. If a future task is genuinely architecture, refactor, runtime convergence, devops, proof, metrics, or repeated diagnostic drift, still start with the repo skill and then use deeper systems-thinking only if it is present and the task actually needs it. This static site does not require an operator plane by default.
