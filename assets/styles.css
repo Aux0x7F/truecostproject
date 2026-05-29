@@ -741,9 +741,9 @@ blockquote {
 .footer-inner {
   width: min(100%, var(--max));
   margin: 0 auto;
-  padding: 2.25rem clamp(1rem, 4vw, 2.5rem) 5.25rem;
+  padding: 1.75rem clamp(1rem, 4vw, 2.5rem) 5.25rem;
   display: grid;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .footer-status {
@@ -839,6 +839,25 @@ blockquote {
   .instagram-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .footer-inner {
+    grid-template-columns: minmax(190px, max-content) minmax(0, 78ch);
+    align-items: start;
+    justify-content: space-between;
+    gap: 0.9rem clamp(1.25rem, 4vw, 3rem);
+    padding-bottom: 2rem;
+  }
+
+  .footer-socials {
+    align-self: end;
+  }
+
+  .footer-legal {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-self: end;
+    text-align: right;
+  }
 }
 
 @media (min-width: 820px) {
@@ -898,6 +917,7 @@ blockquote {
   }
 
   .footer-inner {
-    padding-bottom: 2.25rem;
+    grid-template-columns: minmax(220px, max-content) minmax(0, 78ch);
+    gap: 0.9rem clamp(1.5rem, 5vw, 4rem);
   }
 }
