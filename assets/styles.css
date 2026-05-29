@@ -179,17 +179,34 @@ svg {
   top: var(--header-height);
   left: 0;
   right: 0;
-  display: none;
+  bottom: 0;
+  z-index: 25;
+  display: grid;
+  align-content: start;
   grid-template-columns: 1fr;
   gap: 0;
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100dvh - var(--header-height));
   padding: 0.75rem;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 20px 30px rgba(36, 34, 33, 0.14);
+  opacity: 0;
+  overflow-y: auto;
+  pointer-events: none;
+  transform: translateY(-0.5rem);
+  visibility: hidden;
+  transition:
+    opacity 160ms ease-in-out,
+    transform 160ms ease-in-out,
+    visibility 160ms ease-in-out;
 }
 
 .site-nav.is-open {
-  display: grid;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 .site-nav a {
@@ -866,11 +883,19 @@ blockquote {
     position: static;
     display: flex;
     align-items: center;
+    bottom: auto;
     gap: 0.25rem;
+    min-height: 0;
+    overflow: visible;
+    opacity: 1;
     padding: 0;
     border: 0;
     background: transparent;
     box-shadow: none;
+    pointer-events: auto;
+    transform: none;
+    visibility: visible;
+    transition: none;
   }
 
   .site-nav a {
