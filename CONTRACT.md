@@ -47,6 +47,21 @@ Default user goals are usually:
 
 Do not default to complex dev work, new frameworks, new services, build-system churn, deep refactors, or broad diagnostics when a copy, asset, link, page, preview, or push workflow will solve the request.
 
+## No-Code Setup And Auth
+
+If editing, previewing, or publishing is blocked because GitHub auth, Node, or another small tool is missing, treat that as agent setup work, not as the user's burden.
+
+For the default no-code posture:
+
+- Diagnose missing tools yourself before asking the user to do anything.
+- Prefer tools that are already installed on the machine.
+- If Node is missing, prefer a minimal portable runtime under `.local/` and use it only for this repo/session instead of asking for a global install.
+- Keep portable runtimes, local dependencies, caches, auth files, tokens, and env files out of Git.
+- If GitHub authentication is needed, guide the user through an official browser or device sign-in flow in plain language.
+- Never ask the user to paste a GitHub token, password, or other secret into chat.
+- Do not introduce package managers, project dependencies, or global installs unless the user explicitly asks for dev-mode setup.
+- Explain setup blockers as simple actions: sign in, allow access, retry publish, or wait for the agent to finish setup.
+
 ## Voice Rules
 
 - Use human language. No synthetic filler.

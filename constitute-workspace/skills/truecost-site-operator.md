@@ -36,6 +36,32 @@ For default no-code posture:
 - If the user asks "How do we edit the site?", answer by describing what they can ask the agent to change and offer to open the editor for them.
 - Give commands only when the user asks for them, asks for dev mode, or clearly wants to operate the shell themselves.
 
+## Setup And Authentication Guardrails
+
+Handle setup as agent work first. Do not turn a missing runtime or GitHub login into a command list for a no-code user.
+
+When setup blocks editing, preview, or publishing:
+
+1. Check whether the needed tool already exists.
+2. Prefer the existing installed tool when it works.
+3. If Node is missing, prefer a minimal portable Node runtime inside `.local/` and put it on the agent process path for this repo/session.
+4. Keep any local runtime, dependency folder, cache, env file, token, or auth artifact ignored and out of commits.
+5. Use the repo's existing scripts after setup instead of adding new package dependencies.
+6. If GitHub authentication is missing, use an official GitHub browser or device sign-in flow and describe the user step in plain language.
+7. Never ask the user to paste secrets, tokens, passwords, or cookies into chat.
+
+Good no-code phrasing:
+
+```text
+Publishing needs a GitHub sign-in. I can start the sign-in flow, then you will approve it in your browser. After that I will retry the publish.
+```
+
+Bad default phrasing:
+
+```text
+Run gh auth login, then install Node and rerun the script.
+```
+
 ## Normal Work Categories
 
 Classify the request into the smallest useful category before acting.
@@ -126,6 +152,7 @@ When final external URLs arrive:
 - Do not introduce frameworks, package managers, servers, databases, auth, analytics, or build steps unless explicitly requested.
 - Do not require the end user to have `rg`, Node knowledge, Git knowledge, or code-editor knowledge.
 - Agents may use developer tools internally, but user-facing instructions should stay simple.
+- If tooling is missing, prefer local portable setup under `.local/` over global installation.
 - Preserve user edits already in the worktree. If a copy file or page is dirty, treat it as user/client input unless proven otherwise.
 - Use relative paths for local assets and pages.
 - Do not write local machine paths, home folders, user names, or account-specific deployment paths into public site files or copy files.
