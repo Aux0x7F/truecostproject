@@ -905,7 +905,7 @@ blockquote {
 
   .site-nav .nav-donate {
     --nav-donate-plain-bg: rgba(255, 250, 240, 0.92);
-    --nav-donate-plain-border: rgba(36, 34, 33, 0.18);
+    --nav-donate-plain-border: transparent;
     margin-left: 0.25rem;
     padding-inline: 1rem;
     border: 1px solid var(--gold);
