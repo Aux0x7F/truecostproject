@@ -51,6 +51,257 @@
     }
   }
 
+  var initCopyEditor = function () {
+    var params = new URLSearchParams(window.location.search || "");
+    var localHost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "::1";
+    if (!localHost || params.get("dev") !== "1" || !window.fetch) {
+      return;
+    }
+
+    fetch("/__copy/status", { cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("copy editor unavailable");
+        }
+        return response.json();
+      })
+      .then(function (status) {
+        if (!status || !status.ok) {
+          return;
+        }
+        var allCopyElements = document.querySelectorAll("[data-copy-id]");
+        var copyElements = [];
+        var isEditorExcludedCopy = function (element) {
+          return Boolean(element.closest("a.button, button, .floating-donate, .nav-donate, .site-nav, [data-curator-demo], .curator-demo-grid"));
+        };
+        var sameSiteUrl = function (anchor) {
+          var href = anchor.getAttribute("href") || "";
+          if (!href || href === "#" || anchor.hasAttribute("data-pending-link")) {
+            return null;
+          }
+          try {
+            var url = new URL(href, window.location.href);
+            if (url.origin !== window.location.origin || !/^https?:$/.test(url.protocol)) {
+              return null;
+            }
+            return url;
+          } catch (error) {
+            return null;
+          }
+        };
+
+        for (var i = 0; i < allCopyElements.length; i += 1) {
+          if (!isEditorExcludedCopy(allCopyElements[i])) {
+            copyElements.push(allCopyElements[i]);
+          }
+        }
+
+        if (!copyElements.length) {
+          return;
+        }
+        document.body.classList.add("copy-editor-enabled");
+
+        var dirty = false;
+        var statusText = null;
+        var setDirty = function (value) {
+          dirty = value;
+          document.body.classList.toggle("copy-editor-dirty", dirty);
+        };
+        var copyText = function (element) {
+          var field = element._copyField;
+          var text = field ? field.value : element.innerText;
+          return text.replace(/\u00a0/g, " ").trim();
+        };
+        var sizeField = function (field) {
+          if (!field) {
+            return;
+          }
+          field.style.height = "auto";
+          field.style.height = Math.max(field.scrollHeight, 28) + "px";
+        };
+        var hasDirtyElements = function () {
+          for (var d = 0; d < copyElements.length; d += 1) {
+            if (copyElements[d].hasAttribute("data-copy-dirty")) {
+              return true;
+            }
+          }
+          return false;
+        };
+        var syncElement = function (element) {
+          if (!element || !element.hasAttribute("data-copy-dirty")) {
+            return Promise.resolve({ skipped: true });
+          }
+          if (element._copySyncPromise) {
+            return element._copySyncPromise;
+          }
+          element.setAttribute("data-copy-syncing", "true");
+          if (statusText) {
+            statusText.textContent = "Syncing copy file";
+          }
+          element._copySyncPromise = fetch("/__copy/sync", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: element.getAttribute("data-copy-id"),
+              text: copyText(element)
+            })
+          })
+            .then(function (response) {
+              return response.json().then(function (payload) {
+                if (!response.ok || !payload || payload.ok === false) {
+                  throw new Error(payload && payload.error ? payload.error : "sync failed");
+                }
+                return payload;
+              });
+            })
+            .then(function (payload) {
+              element.removeAttribute("data-copy-dirty");
+              element.removeAttribute("data-copy-syncing");
+              element.setAttribute("data-copy-original", copyText(element));
+              element._copySyncPromise = null;
+              setDirty(hasDirtyElements());
+              if (statusText) {
+                statusText.textContent = "Copy synced";
+              }
+              return payload;
+            })
+            .catch(function (error) {
+              element.removeAttribute("data-copy-syncing");
+              element._copySyncPromise = null;
+              if (statusText) {
+                statusText.textContent = error.message || "Sync failed";
+              }
+              throw error;
+            });
+          return element._copySyncPromise;
+        };
+        var syncDirtyElements = function () {
+          var sequence = Promise.resolve();
+          for (var s = 0; s < copyElements.length; s += 1) {
+            if (copyElements[s].hasAttribute("data-copy-dirty")) {
+              (function (element) {
+                sequence = sequence.then(function () {
+                  return syncElement(element);
+                });
+              })(copyElements[s]);
+            }
+          }
+          return sequence;
+        };
+
+        for (var i = 0; i < copyElements.length; i += 1) {
+          var element = copyElements[i];
+          var originalText = element.innerText.replace(/\u00a0/g, " ").trim();
+          var field = document.createElement("textarea");
+          field.className = "copy-editor-field";
+          field.value = originalText;
+          field.setAttribute("aria-label", "Edit copy");
+          field.setAttribute("rows", "1");
+          field.setAttribute("spellcheck", "true");
+          element.setAttribute("data-copy-editable", "true");
+          element.setAttribute("data-copy-original", originalText);
+          element.innerHTML = "";
+          element.appendChild(field);
+          element._copyField = field;
+          sizeField(field);
+          field.addEventListener("input", function () {
+            var host = this.closest("[data-copy-editable]");
+            sizeField(this);
+            if (host) {
+              host.setAttribute("data-copy-dirty", "true");
+            }
+            setDirty(true);
+          });
+          field.addEventListener("blur", function () {
+            var host = this.closest("[data-copy-editable]");
+            if (host) {
+              syncElement(host).catch(function () {});
+            }
+          });
+        }
+
+        document.addEventListener("focusout", function (event) {
+          var editable = event.target.closest && event.target.closest("[data-copy-editable]");
+          if (editable && event.target !== editable._copyField) {
+            syncElement(editable).catch(function () {});
+          }
+        });
+
+        document.addEventListener("click", function (event) {
+          var editable = event.target.closest && event.target.closest("[data-copy-editable]");
+          if (editable && editable.closest("a")) {
+            event.preventDefault();
+            return;
+          }
+
+          var anchor = event.target.closest && event.target.closest("a[href]");
+          var url = anchor ? sameSiteUrl(anchor) : null;
+          if (url) {
+            url.searchParams.set("dev", "1");
+            event.preventDefault();
+            window.location.href = url.pathname + url.search + url.hash;
+          }
+        });
+
+        var bar = document.createElement("div");
+        bar.className = "copy-editor-bar";
+        bar.innerHTML = '<button class="copy-editor-save" type="button">Save copy</button><span class="copy-editor-status" aria-live="polite"></span>';
+        document.body.appendChild(bar);
+
+        var saveButton = bar.querySelector(".copy-editor-save");
+        statusText = bar.querySelector(".copy-editor-status");
+        saveButton.addEventListener("click", function () {
+          saveButton.disabled = true;
+          saveButton.textContent = "Saving...";
+          statusText.textContent = "Syncing copy files";
+          syncDirtyElements()
+            .then(function () {
+              statusText.textContent = "Running checks";
+              return fetch("/__copy/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: "{}"
+              });
+            })
+            .then(function (response) {
+              return response.json().then(function (payload) {
+                if (!response.ok || !payload || payload.ok === false) {
+                  throw new Error(payload && payload.error ? payload.error : "save failed");
+                }
+                return payload;
+              });
+            })
+            .then(function (payload) {
+              setDirty(false);
+              saveButton.textContent = "Saved";
+              if (payload.pushed) {
+                statusText.textContent = "Committed and pushed " + payload.commit;
+              } else if (payload.pushBlocked) {
+                statusText.textContent = payload.reason || "Committed locally. Push pending.";
+              } else if (payload.blocked) {
+                statusText.textContent = payload.reason || "Saved locally. Commit blocked.";
+              } else if (payload.committed) {
+                statusText.textContent = "Committed locally " + payload.commit;
+              } else {
+                statusText.textContent = payload.changed ? "Saved locally" : "No copy changes";
+              }
+              window.setTimeout(function () {
+                saveButton.textContent = "Save copy";
+                saveButton.disabled = false;
+              }, 1200);
+            })
+            .catch(function (error) {
+              saveButton.textContent = "Save copy";
+              saveButton.disabled = false;
+              statusText.textContent = error.message || "Save failed";
+            });
+        });
+      })
+      .catch(function () {});
+  };
+
+  initCopyEditor();
+
   var pendingLinks = document.querySelectorAll("[data-pending-link]");
   for (var i = 0; i < pendingLinks.length; i += 1) {
     pendingLinks[i].addEventListener("click", function (event) {
@@ -152,7 +403,7 @@
     var buttons = document.querySelectorAll("a.button");
     for (var j = 0; j < buttons.length; j += 1) {
       var button = buttons[j];
-      var isDonate = button.textContent.trim().toLowerCase() === "donate";
+      var isDonate = button.hasAttribute("data-donate-button") || button.textContent.trim().toLowerCase() === "donate";
       var inMenu = button.closest(".site-nav");
       var isFloating = button.classList.contains("floating-donate");
       if (isDonate && !inMenu && !isFloating) {

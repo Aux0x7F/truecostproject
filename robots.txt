@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aux0x7f.github.io/truecostproject/sitemap.xml
+Sitemap: https://truecostproject.org/sitemap.xml

@@ -64,6 +64,18 @@ Never trade a working static launch for a clever interaction.
 - Images may be placeholder gradients or aspect-ratio blocks until final art arrives.
 - Org logos may be treated as square placeholders until final files arrive.
 
+## Clean Path Policy
+
+- Public site code and content must not hardcode local machine paths, user names, home folders, drive paths, or account-specific deployment paths.
+- Use relative paths for local pages, assets, scripts, styles, fonts, copy files, and build tools.
+- Use the public organization domain for canonical URLs, card metadata, JSON-LD IDs, robots, and sitemap entries.
+- Local preview and edit tooling may use `127.0.0.1` URLs because those are operating instructions, not public launch data.
+- Node tooling may resolve absolute paths internally to read and write project files, but those paths must not be written into public files or returned through browser-facing editor API responses.
+- Client copy files under `copy/` should contain only the intended public text for the matching element.
+- The local copy editor should edit body copy in place, not button or navigation labels.
+- In editor mode, same-site links and buttons should remain followable and should preserve `?dev=1` when moving between pages.
+- Editor focus loss should sync changed copy into `copy/` and regenerated HTML; the Save action should commit and push already-synced files after acceptance checks pass.
+
 ## Required Workspace Skill
 
 For architecture, refactor, runtime/product convergence, devops, proof, metrics, browser/lab verification, or repeated diagnostic drift, follow:
@@ -151,6 +163,7 @@ Instagram:
 - If the Curator embed fails, keep the demo tiles and normal profile link rather than scraping.
 - Tiles should be single-wide on mobile and wrap up to four-wide on desktop.
 - Do not add an Instagram scraper, server proxy, or build-time social feed scraper unless the user explicitly accepts that extra dependency.
+- Instagram demo tile labels and descriptions are mockup scaffolding, not client-facing copy fields. Do not expose them in the local in-place editor.
 
 Testimonials:
 
