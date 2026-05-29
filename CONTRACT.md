@@ -51,7 +51,7 @@ Never trade a working static launch for a clever interaction.
 
 - Build as plain static HTML, CSS, and JS unless the user explicitly changes direction.
 - Target GitHub Pages or another static host.
-- Prefer `index.html`, `about.html`, `act.html`, `supporters.html`, `privacy.html`, and `terms.html`.
+- Prefer `index.html`, `about.html`, `act.html`, `privacy.html`, and `terms.html`.
 - Keep `merch.html` hidden or absent until explicitly needed.
 - Keep shared assets under an `assets/` folder.
 - Use one global stylesheet, normally `assets/styles.css`.
@@ -86,7 +86,6 @@ Global navigation:
 
 - About
 - Act
-- Supporters
 - Merch hidden for now
 
 Primary CTA:
@@ -111,7 +110,7 @@ Important assets still pending:
 - Misc banners
 - Forms banner or cover
 - About banner
-- Supporter logos
+- Supporter logos, deferred unless the page returns later
 
 ## Wireframe Reading
 
@@ -125,7 +124,7 @@ Header:
 - Non-homepage hamburger menus should include Home.
 - Desktop navigation should not show Home unless explicitly requested.
 - Keep the logo and menu visible while scrolling when practical.
-- Open mobile menu should include Home on non-home pages, About, Act, Supporters, and Donate.
+- Open mobile menu should include Home on non-home pages, About, Act, and Donate.
 
 Donate:
 
@@ -147,10 +146,11 @@ Instagram:
 - Use the simplest connector.
 - No carousel.
 - Do not add a title or subtitle above the Instagram tile section unless the client asks for it.
-- Prefer Instagram's own public embed when the client wants real population without API keys.
-- If the Instagram embed fails, fall back to a normal profile link rather than scraping.
+- Use Curator as the preferred takeover embed if the client supplies a feed id and accepts the external widget dependency.
+- While the Curator feed id is empty, show local demo tiles sized like the expected Curator grid.
+- If the Curator embed fails, keep the demo tiles and normal profile link rather than scraping.
 - Tiles should be single-wide on mobile and wrap up to four-wide on desktop.
-- The current experimental path may probe Instagram's undocumented public web feed endpoint directly from the browser. Treat this as non-assured. Do not hide CORS, rate-limit, or endpoint failures. Do not add a server proxy or build-time scraper unless the user explicitly accepts that extra dependency.
+- Do not add an Instagram scraper, server proxy, or build-time social feed scraper unless the user explicitly accepts that extra dependency.
 
 Testimonials:
 
@@ -170,12 +170,13 @@ About page sequence:
 2. Descriptive copy about what the org does and how.
 3. Donate CTA.
 
-Supporters page sequence:
+Supporters:
 
-1. Square supporter logo grid with optional links.
-2. Space for testimonials or partner statements later.
+- Do not ship a Supporters page for the current launch.
+- Keep testimonials on the homepage.
+- Supporter logo grids can return later if the client provides approved names, logos, and links.
 
-Supporter logos:
+Deferred supporter logos:
 
 - Treat logos as square.
 - Wrap single-wide or two-wide on mobile, up to four-wide on desktop.
@@ -248,5 +249,5 @@ These are still expected from the client:
 - Subscribe form destination and consent text.
 - Tips destination.
 - Instagram and Facebook URLs.
-- Supporter org list and logos.
+- Supporter org list and logos, deferred unless the page returns later.
 - Privacy and Terms destination or static pages.
