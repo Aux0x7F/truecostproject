@@ -12,8 +12,23 @@ const requiredFiles = [
   "assets/styles.css",
   "assets/site.js",
   "assets/icons.svg",
+  "assets/brand/wordmark-header.png",
+  "assets/brand/wordmark-footer.png",
   "assets/fonts/anton.ttf",
-  "assets/social-card.png"
+  "assets/social-card.png",
+  "assets/images/home-hero-desktop.jpg",
+  "assets/images/home-hero-mobile.jpg",
+  "assets/images/about-banner.jpg",
+  "assets/images/act-banner.jpg",
+  "favicon.ico",
+  "assets/icons/favicon-16x16.png",
+  "assets/icons/favicon-32x32.png",
+  "assets/icons/favicon-96x96.png",
+  "assets/icons/android-icon-192x192.png",
+  "assets/icons/apple-icon-180x180.png",
+  "assets/icons/ms-icon-144x144.png",
+  "assets/icons/manifest.json",
+  "assets/icons/browserconfig.xml"
 ];
 const copyIdPattern = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)+$/;
 const problems = [];
@@ -136,8 +151,19 @@ for (const id of copyFiles) {
 
 const robots = await read("robots.txt");
 const sitemap = await read("sitemap.xml");
+const manifest = JSON.parse(await read("assets/icons/manifest.json"));
+const browserconfig = await read("assets/icons/browserconfig.xml");
 assert(robots.includes("https://truecostproject.org/sitemap.xml"), "robots.txt does not point at the public sitemap.");
 assert(sitemap.includes("https://truecostproject.org/"), "sitemap.xml does not use the public domain.");
+assert(manifest.name === "True Cost Project", "icon manifest has the wrong app name.");
+assert(manifest.theme_color === "#ffffff", "icon manifest should keep the white icon background.");
+assert(Array.isArray(manifest.icons) && manifest.icons.length >= 6, "icon manifest is missing icon entries.");
+for (const icon of manifest.icons || []) {
+  assert(!String(icon.src || "").startsWith("/"), `icon manifest uses a root-absolute path: ${icon.src}`);
+  assert(await exists(`assets/icons/${icon.src}`), `icon manifest references a missing file: ${icon.src}`);
+}
+assert(browserconfig.includes("<TileColor>#ffffff</TileColor>"), "browserconfig should keep the white tile background.");
+assert(!browserconfig.includes('src="/'), "browserconfig uses root-absolute icon paths.");
 
 if (problems.length) {
   console.error("check-site failed:");

@@ -93,9 +93,12 @@ Editor behavior:
 ### Visual Assets
 
 1. Preserve the current hero and banner aspect ratios.
-2. Keep text out of hero and banner elements unless baked into final art.
-3. Use static assets or CSS placeholders.
-4. Verify mobile and desktop framing after layout-affecting changes.
+2. Keep hero and banner title/subtitle text as centered editable HTML over the image or gradient.
+3. Do not bake essential public-facing title or subtitle copy into the art asset.
+4. When changing a hero or banner image, generate or update the section `aria-label` so it describes the visual content without duplicating nearby title copy.
+5. Keep the homepage hero capped to the visible viewport below the sticky header, with background cover cropping when needed.
+6. Use static assets or CSS placeholders.
+7. Verify mobile and desktop framing after layout-affecting changes.
 
 ### Social Links And Feed
 
@@ -108,10 +111,11 @@ Editor behavior:
 
 1. Copy the closest existing page structure.
 2. Add matching `copy/<page>/*.txt` files for editable body copy.
-3. Add navigation only when the page should be public.
-4. Carry over shared CSS, JS, wordmark, footer, floating Donate behavior, SEO metadata, and editor behavior.
-5. Update `sitemap.xml` when the page should be indexed.
-6. Run copy application and site checks.
+3. Include a visual hero or page banner with centered editable `hero-title` and `hero-subtitle` copy files, even if the starting text is blank.
+4. Add navigation only when the page should be public.
+5. Carry over shared CSS, JS, raster wordmark assets with brand link `aria-label`, footer, floating Donate behavior, SEO metadata, and editor behavior.
+6. Update `sitemap.xml` when the page should be indexed.
+7. Run copy application and site checks.
 
 ### Links And Launch Inputs
 

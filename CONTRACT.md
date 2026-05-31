@@ -167,7 +167,7 @@ Important links still pending:
 
 Important assets still pending:
 
-- Final brand asset, if the client replaces the temporary Anton wordmark
+- Final brand asset, if the client replaces the current raster wordmark
 - Hero image, desktop aspect
 - Hero image, mobile aspect
 - Misc banners
@@ -181,12 +181,13 @@ The supplied wireframes define the mobile-first behavior.
 
 Header:
 
-- Use the local Anton wordmark at left instead of a logo until final branding arrives.
+- Use the local raster wordmark asset at left until final branding arrives.
+- Header and footer wordmarks should render as PNG assets. Keep the visible text out of the DOM and expose "True Cost Project home" through the brand link `aria-label`.
 - Hamburger menu at right on mobile.
 - Desktop breakpoints should show expanded navigation full time.
 - Non-homepage hamburger menus should include Home.
 - Desktop navigation should not show Home unless explicitly requested.
-- Keep the logo and menu visible while scrolling when practical.
+- Keep the wordmark and menu visible while scrolling when practical.
 - Open mobile menu should include Home on non-home pages, About, Act, and Donate.
 
 Donate:
@@ -267,11 +268,14 @@ The information contained in this site and related pages is provided for informa
 - Use approximate gradient image placeholders only while final imagery is missing.
 - Do not use eyebrow labels.
 - Section titles should use the width of their container. Do not force narrow character-based wraps unless a specific design calls for it.
-- Page banners can be the right-aspect section itself with a themed gradient background.
+- Page banners can be the right-aspect section itself with a themed gradient or image background.
 - Do not create separate banner boxes just to hold placeholder imagery.
-- Hero and banner sections should not contain live text. Final text inside banner art belongs in the baked asset and its alt description.
+- Hero and banner sections should include centered live editable title and subtitle copy over the image or gradient.
+- Hero and banner assets may include baked illustration details, but essential public-facing title and subtitle text belongs in editable HTML copy.
+- New public pages should carry the same banner pattern: a visual banner or hero slot, centered `banner-copy`, and `copy/<page>/hero-title.txt` plus `copy/<page>/hero-subtitle.txt`.
 - Only the homepage hero gets an embedded bottom-center Donate button.
 - The homepage hero is a fixed-aspect image slot: mobile uses a 4:5 placeholder ratio and desktop uses 16:9 until final asset dimensions arrive.
+- The homepage hero must not exceed the visible viewport below the sticky header. When the cap applies, prefer full-width background cover with vertical cropping over layout overflow.
 - On desktop, the header Donate button stays plain white while the homepage hero Donate button has not yet scrolled past the sticky header. After that point it turns gold.
 - Do not add a separate visible homepage intro section for the hero headline or pitch unless the client asks for it.
 - Do not let placeholder art dominate the page.

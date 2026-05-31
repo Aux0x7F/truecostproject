@@ -98,40 +98,14 @@ svg {
   font-weight: 800;
 }
 
-.wordmark {
-  position: relative;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.18em;
-  max-width: min(58vw, 360px);
-  padding: 0.14rem 0.2rem;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--ink);
-  font-family: "AntonLocal", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-size: clamp(1.16rem, 5.1vw, 1.7rem);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: visible;
-  text-shadow: none;
+.brand-wordmark {
+  display: block;
+  width: clamp(220px, 22vw, 300px);
+  height: auto;
 }
 
-.wordmark-cost {
-  color: var(--red);
-}
-
-.site-footer .wordmark {
-  max-width: 100%;
-  padding: 0.22rem 0.35rem;
-  color: var(--cream);
-  background: transparent;
-  box-shadow: none;
-}
-
-.site-footer .wordmark-cost {
-  color: var(--red);
+.footer-wordmark {
+  width: clamp(220px, 28vw, 340px);
 }
 
 .menu-toggle {
@@ -265,14 +239,33 @@ body[data-page="home"] .nav-home {
 }
 
 .visual-banner {
-  min-height: clamp(260px, 46vw, 560px);
+  min-height: clamp(220px, 33.333vw, 640px);
+}
+
+.page-hero.visual-banner {
+  min-height: 0;
+  aspect-ratio: 3 / 1;
 }
 
 .hero.visual-banner {
+  width: 100%;
+  height: min(calc(100vw * 1.25), calc(100vh - var(--header-height)));
+  height: min(calc(100vw * 1.25), calc(100svh - var(--header-height)));
   min-height: 0;
-  aspect-ratio: var(--hero-mobile-aspect);
+  max-height: none;
+  aspect-ratio: auto;
+  background-image:
+    linear-gradient(90deg, rgba(25, 23, 22, 0.82) 0%, rgba(25, 23, 22, 0.56) 46%, rgba(25, 23, 22, 0.14) 100%),
+    linear-gradient(180deg, rgba(25, 23, 22, 0.02), rgba(25, 23, 22, 0.18)),
+    url("images/home-hero-mobile.jpg");
   background-position: center;
   background-size: cover;
+}
+
+@supports (height: 100dvh) {
+  .hero.visual-banner {
+    height: min(calc(100vw * 1.25), calc(100dvh - var(--header-height)));
+  }
 }
 
 .hero::before,
@@ -308,6 +301,33 @@ body[data-page="home"] .nav-home {
     radial-gradient(circle at 82% 20%, rgba(215, 173, 73, 0.58), transparent 30%),
     radial-gradient(circle at 78% 80%, rgba(165, 42, 38, 0.82), transparent 38%),
     linear-gradient(135deg, #751b1c 0%, #a52a26 48%, #d7ad49 100%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body[data-page="about"] .page-hero {
+  background-image:
+    linear-gradient(90deg, rgba(25, 23, 22, 0.12), rgba(25, 23, 22, 0.22)),
+    url("images/about-banner.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+body[data-page="act"] .page-hero {
+  background-image:
+    linear-gradient(90deg, rgba(25, 23, 22, 0.08), rgba(25, 23, 22, 0.2)),
+    url("images/act-banner.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.hero.visual-banner::before,
+.hero.visual-banner::after,
+.page-hero::before {
+  display: none;
 }
 
 .page-hero::before {
@@ -320,6 +340,85 @@ body[data-page="home"] .nav-home {
     repeating-linear-gradient(90deg, rgba(251, 244, 230, 0.08) 0 1px, transparent 1px 76px);
   content: "";
   pointer-events: none;
+}
+
+.hero-copy,
+.banner-copy {
+  position: absolute;
+  inset: clamp(1rem, 4vw, 3.25rem);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  color: var(--cream);
+  isolation: isolate;
+  pointer-events: none;
+  text-align: center;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.95);
+}
+
+.hero-copy h1,
+.banner-copy h1,
+.hero-copy p,
+.banner-copy p {
+  pointer-events: auto;
+}
+
+.hero-copy {
+  inset:
+    clamp(1rem, 4vw, 3.25rem)
+    clamp(2rem, 7vw, 5.75rem)
+    clamp(4.5rem, 12vw, 7.25rem)
+    clamp(1rem, 4vw, 3.25rem);
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+
+.hero-copy h1,
+.banner-copy h1 {
+  margin: 0;
+  color: var(--cream);
+  line-height: 0.96;
+}
+
+.hero-copy h1 {
+  max-width: 17ch;
+  font-size: clamp(1.85rem, 6.5vw, 3.6rem);
+}
+
+.hero-copy p {
+  max-width: 35rem;
+  margin: clamp(1.15rem, 2.8vw, 1.85rem) 0 0;
+  font-size: clamp(0.95rem, 1.55vw, 1.12rem);
+  line-height: 1.45;
+}
+
+.banner-copy {
+  justify-content: center;
+  width: auto;
+}
+
+.banner-copy h1 {
+  font-size: clamp(1.6rem, 4vw, 3.4rem);
+}
+
+.banner-copy p {
+  margin: 0.85rem 0 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+}
+
+.banner-copy h1:empty,
+.banner-copy p:empty {
+  display: none;
+}
+
+.copy-editor-enabled .banner-copy h1,
+.copy-editor-enabled .banner-copy p {
+  display: block;
+  min-height: 1.75em;
 }
 
 .section-inner {
@@ -1031,7 +1130,17 @@ blockquote {
   }
 
   .hero.visual-banner {
-    aspect-ratio: var(--hero-desktop-aspect);
+    height: min(calc(100vw * 0.5625), calc(100vh - var(--header-height)));
+    height: min(calc(100vw * 0.5625), calc(100svh - var(--header-height)));
+    background-image:
+      linear-gradient(180deg, rgba(25, 23, 22, 0.02), rgba(25, 23, 22, 0.12)),
+      url("images/home-hero-desktop.jpg");
+  }
+
+  @supports (height: 100dvh) {
+    .hero.visual-banner {
+      height: min(calc(100vw * 0.5625), calc(100dvh - var(--header-height)));
+    }
   }
 
   .split-grid {
