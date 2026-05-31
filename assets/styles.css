@@ -215,6 +215,10 @@ body[data-page="home"] .nav-home {
   display: none;
 }
 
+.site-nav .nav-home {
+  color: rgba(25, 23, 22, 0.8);
+}
+
 .section-dark {
   background: var(--graphite);
   color: var(--cream);
@@ -1304,10 +1308,6 @@ blockquote {
   body[data-page="home"]:not(.hero-donate-passed) .site-nav .nav-donate:focus {
     background: var(--gold);
     border-color: var(--gold);
-  }
-
-  .site-nav .nav-home {
-    display: none;
   }
 
   .hero.visual-banner {
