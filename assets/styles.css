@@ -87,9 +87,8 @@ svg {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
-  background: rgba(255, 250, 240, 0.96);
+  background: var(--paper);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(14px);
 }
 
 .brand {
@@ -467,7 +466,7 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2.3rem, 6vw, 5rem);
+  font-size: clamp(2.3rem, 5vw, 5rem);
 }
 
 h2 {
@@ -643,8 +642,18 @@ body[data-page="about"] .content-narrow p {
 }
 
 .social-feed-host {
+  --social-preload-height: max(420px, calc(100svh - var(--header-height) - (var(--social-section-y, 0px) * 2)));
   position: relative;
   width: 100%;
+  height: var(--social-preload-height);
+  min-height: var(--social-preload-height);
+  overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  .social-feed-host {
+    --social-preload-height: max(420px, calc(100dvh - var(--header-height) - (var(--social-section-y, 0px) * 2)));
+  }
 }
 
 .closing-sale h2 {
@@ -680,6 +689,14 @@ body[data-page="about"] .content-narrow p {
   pointer-events: auto;
 }
 
+.social-feed-host.is-curator-ready {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.social-feed-host.is-curator-ready .curator-status,
+.social-feed-host.is-curator-ready .curator-static-follow,
 .social-feed-host.is-curator-ready .curator-demo-grid {
   display: none;
 }
@@ -688,74 +705,195 @@ body[data-page="about"] .content-narrow p {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  height: 100%;
+  min-height: var(--social-preload-height);
 }
 
 .curator-demo-tile {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  aspect-ratio: 1 / 1;
   min-width: 0;
-  overflow: hidden;
+  border: 1px solid rgba(36, 34, 33, 0.12);
+  border-radius: 8px;
+  background: #d8d8d8;
+}
+
+.curator-static-follow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  color: var(--muted);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.curator-static-follow a {
+  color: var(--red);
+  font-weight: 700;
+  text-decoration-color: rgba(117, 27, 28, 0.42);
+  text-underline-offset: 0.16em;
+}
+
+.curator-static-follow a:hover,
+.curator-static-follow a:focus-visible {
+  color: var(--red-dark);
+  text-decoration-color: currentColor;
+}
+
+.social-feed-host.is-curator-loading .curator-static-follow,
+.social-feed-host.is-curator-blocked .curator-static-follow {
+  display: none;
+}
+
+.curator-status {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.25;
+  pointer-events: none;
+  text-align: center;
+}
+
+.curator-status-tile {
+  --curator-action-size: 3.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--curator-action-size);
+  align-items: center;
+  gap: clamp(0.85rem, 3vw, 1.35rem);
+  width: min(42rem, 100%);
+  min-height: 0;
+  padding: 1.15rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--cream);
   color: var(--ink);
   box-shadow: 0 10px 22px rgba(36, 34, 33, 0.1);
-  text-decoration: none;
+  font-weight: 400;
+  text-align: left;
 }
 
-.curator-demo-media {
-  display: block;
-  aspect-ratio: 1 / 1;
-  background:
-    radial-gradient(circle at 22% 22%, rgba(251, 244, 230, 0.62), transparent 24%),
-    radial-gradient(circle at 82% 78%, rgba(215, 173, 73, 0.8), transparent 34%),
-    linear-gradient(135deg, var(--red), var(--red-dark));
-}
-
-.curator-demo-tile:nth-child(2n) .curator-demo-media {
-  background:
-    radial-gradient(circle at 76% 20%, rgba(215, 173, 73, 0.72), transparent 30%),
-    radial-gradient(circle at 24% 78%, rgba(251, 244, 230, 0.34), transparent 32%),
-    linear-gradient(135deg, var(--graphite), var(--red-dark));
-}
-
-.curator-demo-tile:nth-child(3n) .curator-demo-media {
-  background:
-    linear-gradient(90deg, rgba(25, 23, 22, 0.46) 0 1px, transparent 1px 30%),
-    radial-gradient(circle at 74% 26%, rgba(215, 173, 73, 0.76), transparent 30%),
-    linear-gradient(135deg, var(--red), var(--gold));
-}
-
-.curator-demo-tile:hover,
-.curator-demo-tile:focus {
-  border-color: rgba(117, 27, 28, 0.48);
-  box-shadow: 0 12px 26px rgba(36, 34, 33, 0.14);
-}
-
-.curator-demo-copy {
+.curator-status-copy {
   display: grid;
-  align-content: start;
-  gap: 0.45rem;
-  min-height: 6.75rem;
-  padding: 0.78rem;
+  align-content: center;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
-.curator-demo-channel {
-  color: var(--red-dark);
-  font-size: 0.72rem;
-  font-weight: 900;
-  line-height: 1;
+.curator-status-title,
+.curator-status-text {
+  margin: 0;
+  font-weight: 400;
 }
 
-.curator-demo-summary {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.26;
+.curator-status-title {
+  font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+  line-height: 1.15;
+}
+
+.curator-status-text {
+  color: var(--muted);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.35;
+}
+
+.curator-status-action {
+  display: grid;
+  place-items: stretch;
+  align-self: stretch;
+  justify-self: end;
+  width: var(--curator-action-size);
+  height: var(--curator-action-size);
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  aspect-ratio: 1 / 1;
+}
+
+.curator-status-action > * {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.social-feed-host.is-curator-loading .curator-status-loading {
+  display: flex;
+}
+
+.social-feed-host.is-curator-blocked .curator-status-blocked {
+  display: flex;
+  pointer-events: auto;
+}
+
+.curator-status-tile-blocked {
+  border-color: var(--line-light);
+  background: var(--graphite);
+  color: var(--cream);
+  box-shadow: 0 20px 30px rgba(36, 34, 33, 0.14);
+}
+
+.curator-status-tile-blocked .curator-status-text {
+  color: rgba(251, 244, 230, 0.82);
+}
+
+.social-feed-host.is-curator-blocked .curator-demo-grid {
+  opacity: 0.42;
+}
+
+.curator-instagram-link {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(251, 244, 230, 0.18);
+  border-radius: 6px;
+  background: rgba(255, 250, 240, 0.08);
+  color: var(--cream);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.curator-instagram-link:hover,
+.curator-instagram-link:focus-visible {
+  color: var(--gold);
+}
+
+.curator-instagram-icon {
+  width: 46%;
+  height: 46%;
+}
+
+.curator-status-spinner {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--red);
+}
+
+.curator-status-spinner::before {
+  width: 42%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: conic-gradient(from 45deg, currentColor 0 12%, transparent 12% 25%, currentColor 25% 37%, transparent 37% 50%, currentColor 50% 62%, transparent 62% 75%, currentColor 75% 87%, transparent 87%);
+  content: "";
+  animation: curatorPinwheelSpin 0.9s linear infinite;
+}
+
+@keyframes curatorPinwheelSpin {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .tile-grid {
@@ -1126,7 +1264,7 @@ blockquote {
     opacity: 1;
     padding: 0;
     border: 0;
-    background: transparent;
+    background: var(--paper);
     box-shadow: none;
     pointer-events: auto;
     transform: none;
@@ -1140,8 +1278,8 @@ blockquote {
   }
 
   .site-nav .nav-donate {
-    --nav-donate-plain-bg: rgba(255, 250, 240, 0.92);
-    --nav-donate-plain-border: transparent;
+    --nav-donate-plain-bg: var(--paper);
+    --nav-donate-plain-border: var(--gold);
     margin-left: 0.25rem;
     padding-inline: 1rem;
     border: 1px solid var(--gold);
@@ -1164,8 +1302,8 @@ blockquote {
 
   body[data-page="home"]:not(.hero-donate-passed) .site-nav .nav-donate:hover,
   body[data-page="home"]:not(.hero-donate-passed) .site-nav .nav-donate:focus {
-    background: var(--paper);
-    border-color: rgba(36, 34, 33, 0.28);
+    background: var(--gold);
+    border-color: var(--gold);
   }
 
   .site-nav .nav-home {
@@ -1197,6 +1335,16 @@ blockquote {
 
   .curator-demo-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .social-feed-host.is-curator-ready {
+    overflow: hidden;
+  }
+
+  .social-feed-host.is-curator-ready .curator-feed {
+    height: clamp(170px, 20vw, 300px);
+    min-height: 0;
+    overflow: hidden;
   }
 
   .contact-grid {

@@ -72,7 +72,7 @@
         var allCopyElements = document.querySelectorAll("[data-copy-id]");
         var copyElements = [];
         var isEditorExcludedCopy = function (element) {
-          return Boolean(element.closest("a.button, button, .floating-donate, .nav-donate, .site-nav, [data-curator-demo], .curator-demo-grid"));
+          return Boolean(element.closest("a.button, button, .floating-donate, .nav-donate, .site-nav, [data-curator-demo], [data-curator-static], .curator-demo-grid"));
         };
         var sameSiteUrl = function (anchor) {
           var href = anchor.getAttribute("href") || "";
@@ -353,9 +353,14 @@
     var curatorStart = performanceNow();
     var curatorMount = curatorHost.querySelector("[data-curator-mount]");
     var curatorDemo = curatorHost.querySelector("[data-curator-demo]");
+    var curatorStatic = curatorHost.querySelector("[data-curator-static]");
     var curatorFeedId = String(curatorHost.getAttribute("data-curator-feed-id") || "").replace(/\s+/g, "");
     var curatorLayoutId = String(curatorHost.getAttribute("data-curator-layout-id") || "curator-feed-default-feed-layout").replace(/\s+/g, "");
+    var instagramUrl = "https://www.instagram.com/truecostproject/";
     var safeIdPattern = /^[A-Za-z0-9_-]+$/;
+    var curatorBlockedTimer = null;
+    var curatorLoadingStatus = null;
+    var curatorBlockedStatus = null;
     var markCurator = function (name) {
       var ms = Math.round(performanceNow() - curatorStart);
       curatorHost.setAttribute("data-" + name + "-ms", String(ms));
@@ -366,21 +371,161 @@
     var hasCuratorContent = function () {
       return Boolean(curatorMount && curatorMount.querySelector(".crt-post, .crt-feed, .crt-grid, iframe, img, article"));
     };
+    var clearCuratorBlockedTimer = function () {
+      if (curatorBlockedTimer) {
+        window.clearTimeout(curatorBlockedTimer);
+        curatorBlockedTimer = null;
+      }
+    };
+    var createCuratorStatus = function (statusClass) {
+      var status = document.createElement("div");
+      status.className = "curator-status " + statusClass;
+      return status;
+    };
+    var sizeCuratorStatusAction = function (tile) {
+      var copy = tile.querySelector(".curator-status-copy");
+      if (!copy) {
+        return;
+      }
+      var updateSize = function () {
+        var height = copy.getBoundingClientRect().height;
+        if (height > 0) {
+          tile.style.setProperty("--curator-action-size", Math.ceil(Math.max(52, height)) + "px");
+        }
+      };
+      window.requestAnimationFrame(updateSize);
+      if (window.ResizeObserver) {
+        var observer = new ResizeObserver(updateSize);
+        observer.observe(copy);
+      } else {
+        window.addEventListener("resize", updateSize);
+      }
+    };
+    var createCuratorStatusTile = function (tileClass, titleText, bodyText, actionNode) {
+      var tile = document.createElement("div");
+      tile.className = "curator-status-tile" + (tileClass ? " " + tileClass : "");
+      var copy = document.createElement("div");
+      copy.className = "curator-status-copy";
+      var title = document.createElement("p");
+      title.className = "curator-status-title";
+      title.textContent = titleText;
+      copy.appendChild(title);
+      if (bodyText) {
+        var body = document.createElement("p");
+        body.className = "curator-status-text";
+        body.textContent = bodyText;
+        copy.appendChild(body);
+      }
+      var action = document.createElement("div");
+      action.className = "curator-status-action";
+      action.appendChild(actionNode);
+      tile.appendChild(copy);
+      tile.appendChild(action);
+      sizeCuratorStatusAction(tile);
+      return tile;
+    };
+    var ensureCuratorLoadingStatus = function () {
+      if (!curatorLoadingStatus) {
+        curatorLoadingStatus = createCuratorStatus("curator-status-loading");
+        curatorLoadingStatus.setAttribute("data-curator-loading", "");
+        curatorLoadingStatus.setAttribute("aria-live", "polite");
+        var loadingSpinner = document.createElement("span");
+        loadingSpinner.className = "curator-status-spinner";
+        loadingSpinner.setAttribute("aria-hidden", "true");
+        var loadingTile = createCuratorStatusTile("", "Feed loading...", "", loadingSpinner);
+        curatorLoadingStatus.appendChild(loadingTile);
+        curatorHost.appendChild(curatorLoadingStatus);
+      }
+    };
+    var ensureCuratorBlockedStatus = function () {
+      if (!curatorBlockedStatus) {
+        curatorBlockedStatus = createCuratorStatus("curator-status-blocked");
+        curatorBlockedStatus.setAttribute("data-curator-blocked", "");
+        curatorBlockedStatus.setAttribute("role", "status");
+        var instagramLink = document.createElement("a");
+        instagramLink.className = "curator-instagram-link";
+        instagramLink.href = instagramUrl;
+        instagramLink.target = "_blank";
+        instagramLink.rel = "noopener";
+        instagramLink.setAttribute("aria-label", "Open True Cost Project on Instagram");
+        var instagramIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        instagramIcon.classList.add("curator-instagram-icon");
+        instagramIcon.setAttribute("aria-hidden", "true");
+        instagramIcon.setAttribute("focusable", "false");
+        var instagramUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
+        instagramUse.setAttribute("href", "assets/icons.svg#icon-instagram");
+        instagramIcon.appendChild(instagramUse);
+        instagramLink.appendChild(instagramIcon);
+        var blockedTile = createCuratorStatusTile(
+          "curator-status-tile-blocked",
+          "Check out our Instagram",
+          "Your browser is blocking social media embeds, which is good privacy practice!",
+          instagramLink
+        );
+        curatorBlockedStatus.appendChild(blockedTile);
+        curatorHost.appendChild(curatorBlockedStatus);
+      }
+    };
+    var removeCuratorStatus = function (status) {
+      if (status && status.parentNode) {
+        status.parentNode.removeChild(status);
+      }
+    };
     var setCuratorReady = function () {
+      if (curatorHost.classList.contains("is-curator-ready")) {
+        return;
+      }
+      clearCuratorBlockedTimer();
+      removeCuratorStatus(curatorLoadingStatus);
+      removeCuratorStatus(curatorBlockedStatus);
+      curatorLoadingStatus = null;
+      curatorBlockedStatus = null;
       curatorHost.classList.add("is-curator-ready");
       curatorHost.classList.remove("is-curator-loading");
+      curatorHost.classList.remove("is-curator-blocked");
       if (curatorDemo) {
         curatorDemo.setAttribute("aria-hidden", "true");
       }
+      if (curatorStatic) {
+        curatorStatic.setAttribute("aria-hidden", "true");
+      }
       markCurator("ready");
+    };
+    var setCuratorBlocked = function (reason) {
+      if (curatorHost.classList.contains("is-curator-ready") || curatorHost.classList.contains("is-curator-blocked")) {
+        return;
+      }
+      clearCuratorBlockedTimer();
+      removeCuratorStatus(curatorLoadingStatus);
+      curatorLoadingStatus = null;
+      ensureCuratorBlockedStatus();
+      curatorHost.classList.remove("is-curator-loading");
+      curatorHost.classList.add("is-curator-blocked");
+      curatorHost.setAttribute("data-curator-error", reason);
+      if (curatorMount) {
+        curatorMount.setAttribute("aria-hidden", "true");
+      }
+      if (curatorStatic) {
+        curatorStatic.setAttribute("aria-hidden", "true");
+      }
+      markCurator("blocked");
     };
 
     if (curatorFeedId) {
       if (safeIdPattern.test(curatorFeedId) && safeIdPattern.test(curatorLayoutId) && curatorMount) {
+        ensureCuratorLoadingStatus();
         curatorHost.classList.add("is-curator-loading");
+        if (curatorStatic) {
+          curatorStatic.setAttribute("aria-hidden", "true");
+        }
         curatorMount.id = curatorLayoutId;
         curatorMount.setAttribute("aria-hidden", "false");
         curatorMount.innerHTML = '<a href="https://curator.io" target="_blank" rel="noopener" class="crt-logo crt-tag">Powered by Curator.io</a>';
+        curatorBlockedTimer = window.setTimeout(function () {
+          if (!hasCuratorContent()) {
+            setCuratorBlocked("blocked-or-timeout");
+          }
+        }, 8000);
 
         if (window.MutationObserver) {
           var curatorObserver = new MutationObserver(function () {
@@ -401,17 +546,14 @@
             if (hasCuratorContent() && !curatorHost.classList.contains("is-curator-ready")) {
               setCuratorReady();
             }
-          }, 600);
+          }, 1000);
         };
         curatorScript.onerror = function () {
-          curatorHost.classList.remove("is-curator-loading");
-          curatorHost.setAttribute("data-curator-error", "script");
-          markCurator("fallback");
+          setCuratorBlocked("script");
         };
         document.head.appendChild(curatorScript);
       } else {
-        curatorHost.setAttribute("data-curator-error", "invalid-feed-id");
-        markCurator("fallback");
+        setCuratorBlocked("invalid-feed-id");
       }
     } else {
       markCurator("demo");
