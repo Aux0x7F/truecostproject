@@ -102,6 +102,8 @@ for (const page of pages) {
     assert(html.includes("class=\"hero"), "index.html is missing the homepage hero.");
     assert(html.includes("banner-donate"), "index.html is missing the hero Donate button.");
     assert(html.includes("data-curator-feed"), "index.html is missing the social grid handoff.");
+    assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), "index.html is missing the Curator feed id.");
+    assert(html.includes("https://cdn.curator.io"), "index.html is missing the Curator CDN preconnect.");
     assert(html.includes("testimony-grid"), "index.html is missing testimonials.");
   }
 

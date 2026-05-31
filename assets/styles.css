@@ -421,6 +421,15 @@ body[data-page="act"] .page-hero {
   min-height: 1.75em;
 }
 
+.copy-editor-enabled .hero-copy p,
+.copy-editor-enabled .banner-copy p {
+  width: min(100%, 35rem);
+}
+
+.copy-editor-enabled .banner-copy h1 {
+  width: min(100%, 42rem);
+}
+
 .section-inner {
   width: min(100%, var(--max));
   margin: 0 auto;
@@ -615,15 +624,17 @@ h3 {
   transform: translateX(-50%);
 }
 
-.text-link {
-  display: inline-flex;
-  margin-top: 1.25rem;
-  color: var(--red-dark);
-  font-weight: 800;
+.social-preview .section-inner {
+  width: 100%;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
 }
 
 .social-feed-host {
   position: relative;
+  width: 100%;
 }
 
 .curator-feed {
@@ -635,6 +646,10 @@ h3 {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.curator-feed > * {
+  width: 100%;
 }
 
 .social-feed-host.is-curator-ready .curator-feed {
@@ -953,8 +968,15 @@ blockquote {
 }
 
 .copy-editor-enabled [data-copy-editable] {
+  min-width: min(100%, 10rem);
   outline: 1px dashed rgba(165, 42, 38, 0.48);
   outline-offset: 3px;
+}
+
+.copy-editor-enabled .testimony-tile blockquote,
+.copy-editor-enabled .testimony-tile .quote-name,
+.copy-editor-enabled .footer-legal {
+  width: 100%;
 }
 
 .copy-editor-enabled [data-copy-editable]:focus {
