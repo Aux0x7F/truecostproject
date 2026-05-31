@@ -1,7 +1,8 @@
 :root {
-  --red: #a52a26;
+  --red: #751b1c;
   --red-dark: #751b1c;
   --gold: #d7ad49;
+  --donate-highlight: #ffe1a6;
   --cream: #fbf4e6;
   --paper: #fffaf0;
   --graphite: #242221;
@@ -198,7 +199,7 @@ svg {
 .site-nav a:hover,
 .site-nav a:focus,
 .site-nav a[aria-current="page"] {
-  background: rgba(165, 42, 38, 0.1);
+  background: rgba(117, 27, 28, 0.1);
 }
 
 .site-nav .nav-donate {
@@ -233,8 +234,8 @@ body[data-page="home"] .nav-home {
   background:
     linear-gradient(90deg, rgba(25, 23, 22, 0.96) 0%, rgba(25, 23, 22, 0.88) 42%, rgba(25, 23, 22, 0.58) 100%),
     radial-gradient(circle at 78% 18%, rgba(215, 173, 73, 0.68), transparent 29%),
-    radial-gradient(circle at 83% 74%, rgba(165, 42, 38, 0.9), transparent 36%),
-    linear-gradient(135deg, #751b1c 0%, #a52a26 42%, #d7ad49 100%);
+    radial-gradient(circle at 83% 74%, rgba(117, 27, 28, 0.9), transparent 36%),
+    linear-gradient(135deg, #751b1c 0%, #751b1c 42%, #d7ad49 100%);
   color: var(--cream);
 }
 
@@ -299,8 +300,8 @@ body[data-page="home"] .nav-home {
   background:
     linear-gradient(90deg, rgba(25, 23, 22, 0.95) 0%, rgba(25, 23, 22, 0.8) 52%, rgba(25, 23, 22, 0.44) 100%),
     radial-gradient(circle at 82% 20%, rgba(215, 173, 73, 0.58), transparent 30%),
-    radial-gradient(circle at 78% 80%, rgba(165, 42, 38, 0.82), transparent 38%),
-    linear-gradient(135deg, #751b1c 0%, #a52a26 48%, #d7ad49 100%);
+    radial-gradient(circle at 78% 80%, rgba(117, 27, 28, 0.82), transparent 38%),
+    linear-gradient(135deg, #751b1c 0%, #751b1c 48%, #d7ad49 100%);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -445,6 +446,10 @@ body[data-page="act"] .page-hero {
   max-width: 760px;
 }
 
+body[data-page="about"] .content-narrow {
+  max-width: none;
+}
+
 h1,
 h2,
 h3,
@@ -479,8 +484,12 @@ h3 {
   font-size: 1.12rem;
 }
 
+body[data-page="about"] .lead,
+body[data-page="about"] .content-narrow p {
+  max-width: none;
+}
+
 .section-heading {
-  max-width: 760px;
   margin-bottom: 1.8rem;
 }
 
@@ -541,7 +550,7 @@ h3 {
 
 .button-primary {
   --donate-gold: #dfb84f;
-  --donate-gold-hover: #edc966;
+  --donate-gold-hover: var(--donate-highlight);
   --button-bg: var(--donate-gold);
   --button-bg-hover: var(--donate-gold-hover);
   --button-fg: var(--ink);
@@ -562,10 +571,10 @@ h3 {
 
 .button-dark {
   --button-bg: var(--graphite);
-  --button-bg-hover: #4a2728;
+  --button-bg-hover: var(--red);
   --button-fg: var(--cream);
   --button-border: var(--graphite);
-  --button-border-hover: #3b2424;
+  --button-border-hover: var(--red);
 }
 
 .button-secondary {
@@ -700,7 +709,7 @@ h3 {
   background:
     radial-gradient(circle at 22% 22%, rgba(251, 244, 230, 0.62), transparent 24%),
     radial-gradient(circle at 82% 78%, rgba(215, 173, 73, 0.8), transparent 34%),
-    linear-gradient(135deg, var(--red), #c56a37);
+    linear-gradient(135deg, var(--red), var(--red-dark));
 }
 
 .curator-demo-tile:nth-child(2n) .curator-demo-media {
@@ -714,12 +723,12 @@ h3 {
   background:
     linear-gradient(90deg, rgba(25, 23, 22, 0.46) 0 1px, transparent 1px 30%),
     radial-gradient(circle at 74% 26%, rgba(215, 173, 73, 0.76), transparent 30%),
-    linear-gradient(135deg, #7b201f, var(--gold));
+    linear-gradient(135deg, var(--red), var(--gold));
 }
 
 .curator-demo-tile:hover,
 .curator-demo-tile:focus {
-  border-color: rgba(165, 42, 38, 0.48);
+  border-color: rgba(117, 27, 28, 0.48);
   box-shadow: 0 12px 26px rgba(36, 34, 33, 0.14);
 }
 
@@ -937,7 +946,7 @@ blockquote {
 
 .floating-donate {
   --donate-gold: #dfb84f;
-  --donate-gold-hover: #edc966;
+  --donate-gold-hover: var(--donate-highlight);
   --button-bg: var(--donate-gold);
   --button-bg-hover: var(--donate-gold-hover);
   --button-border: var(--donate-gold);
@@ -980,7 +989,7 @@ blockquote {
 
 .copy-editor-enabled [data-copy-editable] {
   min-width: min(100%, 10rem);
-  outline: 1px dashed rgba(165, 42, 38, 0.48);
+  outline: 1px dashed rgba(117, 27, 28, 0.48);
   outline-offset: 3px;
 }
 
@@ -1142,7 +1151,7 @@ blockquote {
 
   .site-nav .nav-donate:hover,
   .site-nav .nav-donate:focus {
-    background: #edc966;
+    background: var(--donate-highlight);
     color: var(--ink);
   }
 
