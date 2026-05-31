@@ -625,10 +625,11 @@ h3 {
 }
 
 .social-preview .section-inner {
+  --social-section-y: clamp(3.25rem, 8vw, 6.5rem);
   width: 100%;
-  padding-top: 0;
+  padding-top: var(--social-section-y);
   padding-right: 0;
-  padding-bottom: 0;
+  padding-bottom: calc(var(--social-section-y) - 1.55rem);
   padding-left: 0;
 }
 
