@@ -638,6 +638,11 @@ h3 {
   width: 100%;
 }
 
+.closing-sale h2 {
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
 .curator-feed {
   position: absolute;
   inset: 0 auto auto 0;
@@ -651,6 +656,11 @@ h3 {
 
 .curator-feed > * {
   width: 100%;
+}
+
+.curator-feed .crt-logo,
+.curator-feed .crt-tag {
+  z-index: 1 !important;
 }
 
 .social-feed-host.is-curator-ready .curator-feed {
@@ -1167,12 +1177,7 @@ blockquote {
   }
 
   .split-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
     align-items: center;
-  }
-
-  .split-grid {
-    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
   }
 
   .testimony-grid,
@@ -1195,5 +1200,16 @@ blockquote {
   .footer-inner {
     grid-template-columns: minmax(220px, max-content) minmax(0, 78ch);
     gap: 0.9rem clamp(1.5rem, 5vw, 4rem);
+  }
+}
+
+@media (min-width: 960px) {
+  .closing-sale .split-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .closing-sale h2 {
+    font-size: clamp(1.65rem, 3.4vw, 2.85rem);
   }
 }
