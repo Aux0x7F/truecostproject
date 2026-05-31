@@ -649,6 +649,11 @@ h3 {
   color: var(--muted);
 }
 
+.action-card p {
+  width: 100%;
+  max-width: none;
+}
+
 .testimony-grid {
   align-items: stretch;
 }

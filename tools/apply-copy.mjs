@@ -18,6 +18,8 @@ const escapeHtml = (value) =>
 
 const decodeHtml = (value) =>
   String(value)
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(?:p|div|h[1-6]|li|blockquote)>/gi, "\n")
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
@@ -25,8 +27,17 @@ const decodeHtml = (value) =>
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, "\"")
     .replace(/&#39;/g, "'")
-    .replace(/\s+/g, " ")
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line) => line.replace(/[ \t\f\v]+/g, " ").trim())
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
     .trim();
+
+const renderCopyHtml = (value) =>
+  escapeHtml(value)
+    .replace(/\r\n/g, "\n")
+    .replace(/\n/g, "<br>\n");
 
 const walkTextFiles = async (dir) => {
   const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
@@ -102,7 +113,7 @@ for (const page of htmlPages) {
     if (!copy.has(copyId)) {
       return full;
     }
-    return `<${groups.tag}${groups.attrs}>${escapeHtml(copy.get(copyId))}</${groups.tag}>`;
+    return `<${groups.tag}${groups.attrs}>${renderCopyHtml(copy.get(copyId))}</${groups.tag}>`;
   });
   if (await writeIfChanged(pagePath, next)) {
     wrote += 1;
