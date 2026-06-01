@@ -18,9 +18,7 @@ const requiredFiles = [
   "assets/fonts/anton.ttf",
   "assets/social-card.png",
   "assets/images/home-hero-desktop.png",
-  "assets/images/home-hero-desktop-960.png",
   "assets/images/home-hero-mobile.png",
-  "assets/images/home-hero-mobile-800.png",
   "assets/images/about-banner.png",
   "assets/images/act-banner.png",
   "favicon.ico",
@@ -109,7 +107,7 @@ for (const page of pages) {
     assert(html.includes("data-curator-feed"), "index.html is missing the social grid handoff.");
     assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), "index.html is missing the Curator feed id.");
     assert(html.includes("https://cdn.curator.io"), "index.html is missing the Curator CDN preconnect.");
-    assert(html.includes("srcset=\"assets/images/home-hero-mobile-800.png 800w, assets/images/home-hero-mobile.png 1200w\""), "index.html is missing responsive hero image srcset.");
+    assert(html.includes("srcset=\"assets/images/home-hero-mobile.png 1x\""), "index.html is missing hero image srcset.");
     assert(html.includes("testimony-grid"), "index.html is missing testimonials.");
   }
 
