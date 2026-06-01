@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const homePages = new Set(["index.html", "index-b.html", "index-c.html"]);
+const homePages = new Set(["index.html", "index-b.html", "index-c.html", "index-d.html"]);
 const pages = [...homePages, "about.html", "act.html", "privacy.html", "terms.html"];
 const copyRoot = path.join(root, "copy");
 const requiredFiles = [
@@ -17,6 +17,7 @@ const requiredFiles = [
   "assets/brand/wordmark-header.png",
   "assets/brand/wordmark-footer.png",
   "assets/brand/wordmark-square-nav.png",
+  "assets/brand/wordmark-square-transparent.png",
   "assets/fonts/anton.ttf",
   "assets/social-card.png",
   "assets/images/home-hero-desktop.png",
