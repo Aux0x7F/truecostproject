@@ -149,7 +149,7 @@ svg {
 
 .site-header-overflow-brand .brand {
   position: relative;
-  z-index: 2;
+  z-index: 30;
   width: var(--overflow-mark-size);
   height: var(--header-height);
   flex: 0 0 var(--overflow-mark-size);
@@ -177,7 +177,8 @@ svg {
 }
 
 .site-header-overflow-brand .site-nav {
-  top: calc(var(--header-height) + var(--overflow-nav-offset));
+  top: var(--header-height);
+  z-index: 20;
 }
 
 .brand-text-mark {
@@ -197,6 +198,21 @@ svg {
 
 .footer-wordmark {
   width: clamp(220px, 28vw, 340px);
+}
+
+.footer-text-mark {
+  display: inline-block;
+  color: var(--cream);
+  font-family: "AntonLocal", Impact, sans-serif;
+  font-size: clamp(2.25rem, 7.5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.footer-text-accent {
+  color: #d23a31;
 }
 
 .menu-toggle {
