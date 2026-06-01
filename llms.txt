@@ -23,6 +23,8 @@ Current status: 501(c)(3) pending.
 - [Sitemap](https://truecostproject.org/sitemap.xml): Canonical list of public pages.
 - [Robots](https://truecostproject.org/robots.txt): Crawl permissions and sitemap reference.
 - [Instagram](https://www.instagram.com/truecostproject/): Public social profile.
+- [Facebook](https://www.facebook.com/profile.php?id=61567428772270): Public social profile.
+- [Donate](https://patreon.com/TrueCostProject): Patreon donation and membership page.
 
 ## Interpretation Notes
 

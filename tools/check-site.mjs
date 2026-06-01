@@ -3,7 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const pages = ["index.html", "about.html", "act.html", "privacy.html", "terms.html"];
+const homePages = new Set(["index.html", "index-b.html", "index-c.html"]);
+const pages = [...homePages, "about.html", "act.html", "privacy.html", "terms.html"];
 const copyRoot = path.join(root, "copy");
 const requiredFiles = [
   ...pages,
@@ -15,6 +16,7 @@ const requiredFiles = [
   "assets/icons.svg",
   "assets/brand/wordmark-header.png",
   "assets/brand/wordmark-footer.png",
+  "assets/brand/wordmark-square-nav.png",
   "assets/fonts/anton.ttf",
   "assets/social-card.png",
   "assets/images/home-hero-desktop.png",
@@ -32,6 +34,11 @@ const requiredFiles = [
   "assets/icons/browserconfig.xml"
 ];
 const copyIdPattern = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)+$/;
+const donateUrl = "https://patreon.com/TrueCostProject";
+const facebookUrl = "https://www.facebook.com/profile.php?id=61567428772270";
+const volunteerUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdItLGn1wnQm3ApwFnvKo05v48QzDq50IV4SlKLuaknGB5ijw/viewform";
+const tipUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfZku3W3lYjDypTkToon5VW0wiZErMpE2BNcIZPpksmq18pmA/viewform";
+const subscribeUrl = "https://forms.gle/38hdWnoYiEzeVhBeA";
 const problems = [];
 let checks = 0;
 
@@ -96,19 +103,29 @@ for (const page of pages) {
   assert(html.includes('rel="llms"'), `${page} is missing the llms.txt discovery link.`);
   assert(!/\b(?:href|src)="[^"]+\?v=/.test(html), `${page} uses query-string asset cache busting.`);
   assert(!/contact\.html|supporters\.html/i.test(html), `${page} still references a removed page.`);
+  assert(!html.includes("fakependingcannotfind"), `${page} still references the placeholder Facebook URL.`);
+  assert(!html.includes("data-pending-link"), `${page} still has pending-link markers.`);
+  assert(html.includes(donateUrl), `${page} is missing the final Donate URL.`);
+  assert(html.includes(facebookUrl), `${page} is missing the final Facebook URL.`);
 
-  if (["index.html", "about.html", "act.html"].includes(page)) {
+  if (homePages.has(page) || ["about.html", "act.html"].includes(page)) {
     assert(html.includes("application/ld+json"), `${page} is missing JSON-LD.`);
   }
 
-  if (page === "index.html") {
-    assert(html.includes("class=\"hero"), "index.html is missing the homepage hero.");
-    assert(html.includes("banner-donate"), "index.html is missing the hero Donate button.");
-    assert(html.includes("data-curator-feed"), "index.html is missing the social grid handoff.");
-    assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), "index.html is missing the Curator feed id.");
-    assert(html.includes("https://cdn.curator.io"), "index.html is missing the Curator CDN preconnect.");
-    assert(html.includes("srcset=\"assets/images/home-hero-mobile.png 1x\""), "index.html is missing hero image srcset.");
-    assert(html.includes("testimony-grid"), "index.html is missing testimonials.");
+  if (homePages.has(page)) {
+    assert(html.includes("class=\"hero"), `${page} is missing the homepage hero.`);
+    assert(html.includes("banner-donate"), `${page} is missing the hero Donate button.`);
+    assert(html.includes("data-curator-feed"), `${page} is missing the social grid handoff.`);
+    assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), `${page} is missing the Curator feed id.`);
+    assert(html.includes("https://cdn.curator.io"), `${page} is missing the Curator CDN preconnect.`);
+    assert(html.includes("srcset=\"assets/images/home-hero-mobile.png 1x\""), `${page} is missing hero image srcset.`);
+    assert(html.includes("testimony-grid"), `${page} is missing testimonials.`);
+  }
+
+  if (page === "act.html") {
+    assert(html.includes(volunteerUrl), "act.html is missing the final Volunteer URL.");
+    assert(html.includes(tipUrl), "act.html is missing the final Submit a Tip URL.");
+    assert(html.includes(subscribeUrl), "act.html is missing the final Stay in the Loop URL.");
   }
 
   for (const match of html.matchAll(/\bdata-copy-id="([^"]+)"/g)) {
