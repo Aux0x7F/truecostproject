@@ -7,6 +7,7 @@ const pages = ["index.html", "about.html", "act.html", "privacy.html", "terms.ht
 const copyRoot = path.join(root, "copy");
 const requiredFiles = [
   ...pages,
+  "llms.txt",
   "robots.txt",
   "sitemap.xml",
   "assets/styles.css",
@@ -17,7 +18,9 @@ const requiredFiles = [
   "assets/fonts/anton.ttf",
   "assets/social-card.png",
   "assets/images/home-hero-desktop.png",
+  "assets/images/home-hero-desktop-960.png",
   "assets/images/home-hero-mobile.png",
+  "assets/images/home-hero-mobile-800.png",
   "assets/images/about-banner.png",
   "assets/images/act-banner.png",
   "favicon.ico",
@@ -92,6 +95,8 @@ for (const page of pages) {
   assert(html.includes("data-site-header"), `${page} is missing the site header.`);
   assert(html.includes("site-footer"), `${page} is missing the footer.`);
   assert(html.includes("floating-donate"), `${page} is missing the floating Donate button.`);
+  assert(html.includes('rel="llms"'), `${page} is missing the llms.txt discovery link.`);
+  assert(!/\b(?:href|src)="[^"]+\?v=/.test(html), `${page} uses query-string asset cache busting.`);
   assert(!/contact\.html|supporters\.html/i.test(html), `${page} still references a removed page.`);
 
   if (["index.html", "about.html", "act.html"].includes(page)) {
@@ -104,6 +109,7 @@ for (const page of pages) {
     assert(html.includes("data-curator-feed"), "index.html is missing the social grid handoff.");
     assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), "index.html is missing the Curator feed id.");
     assert(html.includes("https://cdn.curator.io"), "index.html is missing the Curator CDN preconnect.");
+    assert(html.includes("srcset=\"assets/images/home-hero-mobile-800.png 800w, assets/images/home-hero-mobile.png 1200w\""), "index.html is missing responsive hero image srcset.");
     assert(html.includes("testimony-grid"), "index.html is missing testimonials.");
   }
 
@@ -153,10 +159,14 @@ for (const id of copyFiles) {
 
 const robots = await read("robots.txt");
 const sitemap = await read("sitemap.xml");
+const llms = await read("llms.txt");
 const manifest = JSON.parse(await read("assets/icons/manifest.json"));
 const browserconfig = await read("assets/icons/browserconfig.xml");
 assert(robots.includes("https://truecostproject.org/sitemap.xml"), "robots.txt does not point at the public sitemap.");
+assert(robots.includes("https://truecostproject.org/llms.txt"), "robots.txt does not reference llms.txt.");
 assert(sitemap.includes("https://truecostproject.org/"), "sitemap.xml does not use the public domain.");
+assert(llms.startsWith("# True Cost Project"), "llms.txt is missing the site title.");
+assert(llms.includes("https://truecostproject.org/act.html"), "llms.txt is missing the Act page.");
 assert(manifest.name === "True Cost Project", "icon manifest has the wrong app name.");
 assert(manifest.theme_color === "#ffffff", "icon manifest should keep the white icon background.");
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 6, "icon manifest is missing icon entries.");

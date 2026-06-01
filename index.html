@@ -25,10 +25,11 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/icons/ms-icon-144x144.png">
     <meta name="msapplication-config" content="assets/icons/browserconfig.xml">
-    <link rel="preload" as="image" href="assets/brand/wordmark-header.png?v=20260530-wordmark2" fetchpriority="high">
-    <link rel="preload" as="image" href="assets/images/home-hero-mobile.png" media="(max-width: 819.98px)" fetchpriority="high">
-    <link rel="preload" as="image" href="assets/images/home-hero-desktop.png" media="(min-width: 820px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/brand/wordmark-header.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/home-hero-mobile-800.png" imagesrcset="assets/images/home-hero-mobile-800.png 800w, assets/images/home-hero-mobile.png 1200w" imagesizes="100vw" media="(max-width: 819.98px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/home-hero-desktop-960.png" imagesrcset="assets/images/home-hero-desktop-960.png 960w, assets/images/home-hero-desktop.png 1200w" imagesizes="100vw" media="(min-width: 820px)" fetchpriority="high">
     <link rel="canonical" href="https://truecostproject.org/">
+    <link rel="llms" type="text/plain" href="llms.txt">
     <link rel="me" href="https://www.instagram.com/truecostproject/">
     <link rel="preconnect" href="https://cdn.curator.io">
     <meta property="og:site_name" content="True Cost Project">
@@ -37,8 +38,8 @@
     <meta property="og:title" content="Your tax dollars fund this. | True Cost Project">
     <meta property="og:description" content="We file records requests, ask the questions, and put institutions funding animal exploitation on record.">
     <meta property="og:url" content="https://truecostproject.org/">
-    <meta property="og:image" content="https://truecostproject.org/assets/social-card.png?v=20260531">
-    <meta property="og:image:secure_url" content="https://truecostproject.org/assets/social-card.png?v=20260531">
+    <meta property="og:image" content="https://truecostproject.org/assets/social-card.png">
+    <meta property="og:image:secure_url" content="https://truecostproject.org/assets/social-card.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -46,13 +47,14 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Your tax dollars fund this. | True Cost Project">
     <meta name="twitter:description" content="We file records requests, ask the questions, and put institutions funding animal exploitation on record.">
-    <meta name="twitter:image" content="https://truecostproject.org/assets/social-card.png?v=20260531">
+    <meta name="twitter:image" content="https://truecostproject.org/assets/social-card.png">
     <meta name="twitter:image:alt" content="True Cost Project social card showing a chimpanzee hand gripping cage bars with the text Your tax dollars fund this.">
-    <link rel="stylesheet" href="assets/styles.css?v=20260531-legal">
-    <script src="assets/site.js?v=20260531-feed" defer></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/site.js" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
+        "@type": "WebPage",
         "@graph": [
           {
             "@type": "Organization",
@@ -61,7 +63,7 @@
             "url": "https://truecostproject.org/",
             "description": "True Cost Project exposes taxpayer-funded animal exploitation through public records, hard questions, and public accountability.",
             "email": "info@truecostproject.org",
-            "image": "https://truecostproject.org/assets/social-card.png?v=20260531",
+            "image": "https://truecostproject.org/assets/social-card.png",
             "sameAs": [
               "https://www.instagram.com/truecostproject/"
             ],
@@ -112,11 +114,11 @@
             },
             "primaryImageOfPage": {
               "@type": "ImageObject",
-              "url": "https://truecostproject.org/assets/social-card.png?v=20260531",
+              "url": "https://truecostproject.org/assets/social-card.png",
               "width": 1200,
               "height": 630
             },
-            "dateModified": "2026-05-31",
+            "dateModified": "2026-06-01",
             "inLanguage": "en-US"
           }
         ]
@@ -127,7 +129,8 @@
       <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" data-site-header>
       <a class="brand" href="index.html" aria-label="True Cost Project home">
-        <img class="brand-wordmark" src="assets/brand/wordmark-header.png?v=20260530-wordmark2" alt="" aria-hidden="true" width="1058" height="198" decoding="async" fetchpriority="high">
+        <img class="brand-wordmark" src="assets/brand/wordmark-header.png" alt="" aria-hidden="true" width="1058" height="198" decoding="async" fetchpriority="high">
+        <span class="sr-only">True Cost Project home</span>
       </a>
       <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">
         <span class="menu-toggle-lines" aria-hidden="true"></span>
@@ -144,8 +147,8 @@
     <main id="main">
       <section class="hero section-dark visual-banner" aria-label="Illustration of a chimp in a cage">
         <picture class="hero-media" aria-hidden="true">
-          <source media="(min-width: 820px)" srcset="assets/images/home-hero-desktop.png">
-          <img src="assets/images/home-hero-mobile.png" alt="" width="1200" height="1500" loading="eager" decoding="sync" fetchpriority="high">
+          <source media="(min-width: 820px)" srcset="assets/images/home-hero-desktop-960.png 960w, assets/images/home-hero-desktop.png 1200w" sizes="100vw">
+          <img src="assets/images/home-hero-mobile.png" srcset="assets/images/home-hero-mobile-800.png 800w, assets/images/home-hero-mobile.png 1200w" sizes="100vw" alt="" width="1200" height="1500" loading="eager" decoding="sync" fetchpriority="high">
         </picture>
         <div class="hero-copy">
           <h1 data-copy-id="index/hero-title">Your tax dollars fund this.</h1>
@@ -214,17 +217,21 @@ Public accountability.</h2>
       <div class="footer-inner">
         <div class="footer-brand-column">
           <a class="brand footer-brand" href="index.html" aria-label="True Cost Project home">
-            <img class="brand-wordmark footer-wordmark" src="assets/brand/wordmark-footer.png?v=20260530-wordmark2" alt="" aria-hidden="true" width="1058" height="198" loading="lazy" decoding="async">
+            <img class="brand-wordmark footer-wordmark" src="assets/brand/wordmark-footer.png" alt="" aria-hidden="true" width="1058" height="198" loading="lazy" decoding="async">
+            <span class="sr-only">True Cost Project home</span>
           </a>
           <div class="footer-socials" id="socials" aria-label="Social links">
             <a href="https://www.instagram.com/truecostproject/" target="_blank" rel="noopener" aria-label="Instagram">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-instagram"></use></svg>
+              <span class="sr-only">Instagram</span>
             </a>
             <a href="https://www.facebook.com/fakependingcannotfind" target="_blank" rel="noopener" aria-label="Facebook">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-facebook"></use></svg>
+              <span class="sr-only">Facebook</span>
             </a>
             <a href="mailto:info@truecostproject.org" aria-label="Email">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-email"></use></svg>
+              <span class="sr-only">Email</span>
             </a>
           </div>
         </div>

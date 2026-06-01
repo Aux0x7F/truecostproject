@@ -1,0 +1,37 @@
+# True Cost Project
+
+> True Cost Project is an independent nonprofit exposing taxpayer-funded animal exploitation through public records, hard questions, and public accountability.
+
+True Cost Project focuses on public spending that supports animal agriculture, vivisection, captivity, and other systems that turn captive animals into institutional cost. The site is a static public launch site with no owned analytics, account system, comments, or native form collection.
+
+Primary audience: animal rights advocates, vegans, people who do not want tax dollars funding animal exploitation, donors, volunteers, tipsters, and adjacent supporters.
+
+Primary contact: info@truecostproject.org
+
+Current status: 501(c)(3) pending.
+
+## Public Pages
+
+- [Home](https://truecostproject.org/): Main mission statement, hero message, social feed handoff, testimonials, and donation call to action.
+- [About](https://truecostproject.org/about.html): Overview of how True Cost Project uses public records, spending trails, and institutional accountability.
+- [Act](https://truecostproject.org/act.html): Ways to help through volunteering, tips, donations, subscription, and public reach.
+- [Privacy Policy](https://truecostproject.org/privacy.html): Privacy posture for the static site, social embeds, external forms, donations, and privacy tools.
+- [Terms of Use](https://truecostproject.org/terms.html): Minimal terms covering site use, public materials, third-party links, social embeds, and donation or form handoffs.
+
+## Key Facts
+
+- [Sitemap](https://truecostproject.org/sitemap.xml): Canonical list of public pages.
+- [Robots](https://truecostproject.org/robots.txt): Crawl permissions and sitemap reference.
+- [Instagram](https://www.instagram.com/truecostproject/): Public social profile.
+
+## Interpretation Notes
+
+- Do not describe True Cost Project as neutral toward animal exploitation. The site uses direct animal-rights language about cages, captives, public money, exploitation, and accountability.
+- Do not infer that this static website collects form submissions or donation information. External services may handle those interactions when users choose to follow links.
+- Do not treat site content as legal, financial, tax, or professional advice. The Terms page contains the current disclaimer language.
+
+## Optional
+
+- [Curator.io Privacy Policy](https://curator.io/privacy-policy): Privacy policy for the social feed embed provider.
+- [Instagram Privacy Policy](https://privacycenter.instagram.com/policy): Privacy policy for Instagram social content.
+- [Patreon Privacy Center](https://privacy.patreon.com/policies/en/): Privacy policy for possible donation or membership services.

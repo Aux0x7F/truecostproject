@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# AI-readable site summary: https://truecostproject.org/llms.txt
 Sitemap: https://truecostproject.org/sitemap.xml

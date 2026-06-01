@@ -25,15 +25,16 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/icons/ms-icon-144x144.png">
     <meta name="msapplication-config" content="assets/icons/browserconfig.xml">
-    <link rel="preload" as="image" href="assets/brand/wordmark-header.png?v=20260530-wordmark2" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/brand/wordmark-header.png" fetchpriority="high">
     <link rel="canonical" href="https://truecostproject.org/privacy.html">
+    <link rel="llms" type="text/plain" href="llms.txt">
     <meta property="og:site_name" content="True Cost Project">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Privacy Policy | True Cost Project">
     <meta property="og:description" content="How True Cost Project handles privacy on a static site, including social embeds, external forms, donations, and privacy tools.">
     <meta property="og:url" content="https://truecostproject.org/privacy.html">
-    <meta property="og:image" content="https://truecostproject.org/assets/social-card.png?v=20260531">
-    <meta property="og:image:secure_url" content="https://truecostproject.org/assets/social-card.png?v=20260531">
+    <meta property="og:image" content="https://truecostproject.org/assets/social-card.png">
+    <meta property="og:image:secure_url" content="https://truecostproject.org/assets/social-card.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -41,16 +42,41 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Privacy Policy | True Cost Project">
     <meta name="twitter:description" content="How True Cost Project handles privacy on a static site, including social embeds, external forms, donations, and privacy tools.">
-    <meta name="twitter:image" content="https://truecostproject.org/assets/social-card.png?v=20260531">
+    <meta name="twitter:image" content="https://truecostproject.org/assets/social-card.png">
     <meta name="twitter:image:alt" content="True Cost Project social card showing a chimpanzee hand gripping cage bars with the text Your tax dollars fund this.">
-    <link rel="stylesheet" href="assets/styles.css?v=20260531-legal">
-    <script src="assets/site.js?v=20260531-feed" defer></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/site.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://truecostproject.org/privacy.html#webpage",
+        "url": "https://truecostproject.org/privacy.html",
+        "name": "Privacy Policy | True Cost Project",
+        "description": "How True Cost Project handles privacy on a static site, including social embeds, external forms, donations, and privacy tools.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://truecostproject.org/#website",
+          "name": "True Cost Project",
+          "url": "https://truecostproject.org/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://truecostproject.org/#organization",
+          "name": "True Cost Project",
+          "url": "https://truecostproject.org/"
+        },
+        "dateModified": "2026-06-01",
+        "inLanguage": "en-US"
+      }
+    </script>
   </head>
   <body data-page="privacy">
       <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" data-site-header>
       <a class="brand" href="index.html" aria-label="True Cost Project home">
-        <img class="brand-wordmark" src="assets/brand/wordmark-header.png?v=20260530-wordmark2" alt="" aria-hidden="true" width="1058" height="198" decoding="async" fetchpriority="high">
+        <img class="brand-wordmark" src="assets/brand/wordmark-header.png" alt="" aria-hidden="true" width="1058" height="198" decoding="async" fetchpriority="high">
+        <span class="sr-only">True Cost Project home</span>
       </a>
       <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">
         <span class="menu-toggle-lines" aria-hidden="true"></span>
@@ -100,17 +126,21 @@
       <div class="footer-inner">
         <div class="footer-brand-column">
           <a class="brand footer-brand" href="index.html" aria-label="True Cost Project home">
-            <img class="brand-wordmark footer-wordmark" src="assets/brand/wordmark-footer.png?v=20260530-wordmark2" alt="" aria-hidden="true" width="1058" height="198" loading="lazy" decoding="async">
+            <img class="brand-wordmark footer-wordmark" src="assets/brand/wordmark-footer.png" alt="" aria-hidden="true" width="1058" height="198" loading="lazy" decoding="async">
+            <span class="sr-only">True Cost Project home</span>
           </a>
           <div class="footer-socials" aria-label="Social links">
             <a href="https://www.instagram.com/truecostproject/" target="_blank" rel="noopener" aria-label="Instagram">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-instagram"></use></svg>
+              <span class="sr-only">Instagram</span>
             </a>
             <a href="https://www.facebook.com/fakependingcannotfind" target="_blank" rel="noopener" aria-label="Facebook">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-facebook"></use></svg>
+              <span class="sr-only">Facebook</span>
             </a>
             <a href="mailto:info@truecostproject.org" aria-label="Email">
               <svg class="social-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#icon-email"></use></svg>
+              <span class="sr-only">Email</span>
             </a>
           </div>
         </div>

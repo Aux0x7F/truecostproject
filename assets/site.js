@@ -29,6 +29,34 @@
   var performanceNow = function () {
     return window.performance && window.performance.now ? window.performance.now() : Date.now();
   };
+  var ensureNonBlockingCuratorScripts = function (root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var scripts = scope.querySelectorAll('script[src*="cdn.curator.io/"]');
+    Array.prototype.forEach.call(scripts, function (script) {
+      if (!script.hasAttribute("async") && !script.hasAttribute("defer") && script.getAttribute("type") !== "module") {
+        script.setAttribute("async", "");
+        script.setAttribute("defer", "");
+      }
+    });
+  };
+
+  ensureNonBlockingCuratorScripts(document);
+
+  if (window.MutationObserver) {
+    new MutationObserver(function (mutations) {
+      Array.prototype.forEach.call(mutations, function (mutation) {
+        Array.prototype.forEach.call(mutation.addedNodes || [], function (node) {
+          if (node && node.nodeType === 1) {
+            if (node.tagName === "SCRIPT" && /cdn\.curator\.io\//.test(node.getAttribute("src") || "")) {
+              ensureNonBlockingCuratorScripts(node.parentNode || document);
+            } else if (node.querySelectorAll) {
+              ensureNonBlockingCuratorScripts(node);
+            }
+          }
+        });
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
 
   if (nav && toggle) {
     toggle.addEventListener("click", function () {
@@ -539,6 +567,7 @@
 
         var curatorScript = document.createElement("script");
         curatorScript.async = true;
+        curatorScript.defer = true;
         curatorScript.charset = "UTF-8";
         curatorScript.src = "https://cdn.curator.io/published/" + encodeURIComponent(curatorFeedId) + ".js";
         curatorScript.onload = function () {
