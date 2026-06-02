@@ -353,11 +353,6 @@ body[data-page="home"] .nav-home {
   min-height: clamp(220px, 33.333vw, 640px);
 }
 
-.page-hero.visual-banner {
-  min-height: 0;
-  aspect-ratio: 3 / 1;
-}
-
 .hero.visual-banner {
   width: 100%;
   height: min(calc(100vw * 1.25), calc(100vh - var(--header-height)));
@@ -422,7 +417,7 @@ body[data-page="about"] .page-hero {
     url("images/about-banner.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 body[data-page="act"] .page-hero {
@@ -431,7 +426,7 @@ body[data-page="act"] .page-hero {
     url("images/act-banner.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 .hero.visual-banner::after,
@@ -602,7 +597,7 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2.3rem, 5vw, 5rem);
+  font-size: clamp(2rem, 5vw, 5rem);
 }
 
 h2 {
@@ -1427,12 +1422,21 @@ blockquote {
 }
 
 @media (max-width: 819.98px) {
+  .page-hero.visual-banner {
+    min-height: 100%;
+    aspect-ratio: 3 / 3;
+  }
+
   body[data-page="privacy"] .legal-copy {
     padding-bottom: 4.5rem;
   }
 }
 
 @media (min-width: 820px) {
+  .visual-banner {
+    min-height: clamp(220px, 29.333vw, 640px);
+  }
+
   .menu-toggle {
     display: none;
   }
