@@ -450,6 +450,10 @@ body[data-page="act"] .page-hero {
   object-position: center;
 }
 
+body[data-hero-test="b"] .hero-media img {
+  object-position: left top;
+}
+
 .hero.visual-banner::before {
   display: block;
   inset: 0;
@@ -459,6 +463,12 @@ body[data-page="act"] .page-hero {
   background:
     linear-gradient(90deg, rgba(25, 23, 22, 0.82) 0%, rgba(25, 23, 22, 0.56) 46%, rgba(25, 23, 22, 0.14) 100%),
     linear-gradient(180deg, rgba(25, 23, 22, 0.02), rgba(25, 23, 22, 0.18));
+}
+
+body[data-hero-test="b"] .hero.visual-banner::before {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.0) 100%, rgba(0, 0, 0, .05) 50%, rgba(0, 0, 0, 0.5) 50%),
+    linear-gradient(180deg, rgba(25, 23, 22, 0), rgba(0, 0, 0, 0.5));
 }
 
 .page-hero::before {
@@ -525,6 +535,29 @@ body[data-page="act"] .page-hero {
   margin: clamp(1.15rem, 2.8vw, 1.85rem) 0 0;
   font-size: clamp(0.95rem, 1.55vw, 1.12rem);
   line-height: 1.45;
+}
+
+body[data-hero-test="b"] .hero-copy {
+  inset:
+    clamp(1.25rem, 4vw, 3.25rem)
+    clamp(1.25rem, 6vw, 5rem)
+    clamp(5.5rem, 13vw, 8.25rem)
+    clamp(1.25rem, 4vw, 3.25rem);
+  align-items: flex-end;
+  text-align: right;
+}
+
+body[data-hero-test="b"] .hero-copy h1,
+body[data-hero-test="b"] .hero-copy p {
+  margin-left: auto;
+}
+
+body[data-hero-test="b"] .hero-copy h1 {
+  max-width: min(100%, 16ch);
+}
+
+body[data-hero-test="b"] .hero-copy p {
+  max-width: min(100%, 35rem);
 }
 
 .banner-copy {
@@ -794,6 +827,16 @@ body[data-page="about"] .content-narrow p {
   border-color: var(--button-border-hover);
   box-shadow: var(--button-shadow-hover);
   transform: translateX(-50%);
+}
+
+body[data-hero-test="b"] .banner-donate,
+body[data-hero-test="b"] .banner-donate.donate-hint,
+body[data-hero-test="b"] .banner-donate.donate-hint:hover,
+body[data-hero-test="b"] .banner-donate.donate-hint:focus-visible,
+body[data-hero-test="b"] .banner-donate.donate-hint.button-hover {
+  right: clamp(1.25rem, 6vw, 5rem);
+  left: auto;
+  transform: none;
 }
 
 .social-preview .section-inner {
@@ -1098,19 +1141,6 @@ body[data-page="about"] .content-narrow p {
   background: rgba(255, 250, 240, 0.08);
   color: var(--cream);
   border-color: var(--line-light);
-}
-
-.avatar-placeholder {
-  width: 52px;
-  height: 52px;
-  margin-bottom: 1rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--red), var(--cream));
-  border: 2px solid var(--gold);
-}
-
-.avatar-placeholder.gold {
-  background: linear-gradient(135deg, var(--gold), var(--red-dark));
 }
 
 blockquote {

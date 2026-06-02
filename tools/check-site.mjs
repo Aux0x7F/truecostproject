@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const homePages = new Set(["index.html", "index-b.html", "index-c.html", "index-d.html"]);
+const homePages = new Set(["index.html", "index-b.html"]);
 const pages = [...homePages, "about.html", "act.html", "privacy.html", "terms.html"];
 const copyRoot = path.join(root, "copy");
 const requiredFiles = [
@@ -22,6 +22,8 @@ const requiredFiles = [
   "assets/social-card.png",
   "assets/images/home-hero-desktop.png",
   "assets/images/home-hero-mobile.png",
+  "assets/images/home-hero-desktop-b.png",
+  "assets/images/home-hero-mobile-b.png",
   "assets/images/about-banner.png",
   "assets/images/act-banner.png",
   "favicon.ico",
@@ -119,7 +121,8 @@ for (const page of pages) {
     assert(html.includes("data-curator-feed"), `${page} is missing the social grid handoff.`);
     assert(html.includes("data-curator-feed-id=\"ea323e97-9418-4bc4-b4ee-fff80795c060\""), `${page} is missing the Curator feed id.`);
     assert(html.includes("https://cdn.curator.io"), `${page} is missing the Curator CDN preconnect.`);
-    assert(html.includes("srcset=\"assets/images/home-hero-mobile.png 1x\""), `${page} is missing hero image srcset.`);
+    const heroMobile = page === "index-b.html" ? "assets/images/home-hero-mobile-b.png" : "assets/images/home-hero-mobile.png";
+    assert(html.includes(`srcset="${heroMobile} 1x"`), `${page} is missing hero image srcset.`);
     assert(html.includes("testimony-grid"), `${page} is missing testimonials.`);
   }
 
