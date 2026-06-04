@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const copyRoot = path.join(root, "copy");
-const htmlPages = ["index.html", "index-b.html", "about.html", "act.html", "privacy.html", "terms.html"];
+const htmlPages = ["index.html", "about.html", "act.html", "privacy.html", "terms.html"];
 const extractMissing = process.argv.includes("--extract-missing");
 
 const copyIdPattern = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)+$/;
